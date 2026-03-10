@@ -47,7 +47,7 @@ const individualDeliveryOptions: DeliveryOption[] = [
     title: "ПВЗ «Вмасле»",
     subtitle: "Самовывоз",
     details: [
-      { icon: <MapPin className="h-3.5 w-3.5" />, text: "Некрасовская 69 стр 1" },
+      { icon: <MapPin className="h-3.5 w-3.5" />, text: "г. Владивосток, Некрасовская 69 стр 1" },
       { icon: <Clock className="h-3.5 w-3.5" />, text: "Пн–Пт: 10:00–18:00 · Сб, Вс — выходной" },
       { text: "Заказ будет доставлен завтра", highlight: true },
     ],
@@ -77,7 +77,7 @@ const businessDeliveryOptions: DeliveryOption[] = [
     title: "ПВЗ «Вмасле»",
     subtitle: "Самовывоз",
     details: [
-      { icon: <MapPin className="h-3.5 w-3.5" />, text: "Некрасовская 69 стр 1" },
+      { icon: <MapPin className="h-3.5 w-3.5" />, text: "г. Владивосток, Некрасовская 69 стр 1" },
       { icon: <Clock className="h-3.5 w-3.5" />, text: "Пн–Пт: 10:00–18:00 · Сб, Вс — выходной" },
       { text: "Заказ будет доставлен завтра", highlight: true },
       { icon: <Info className="h-3.5 w-3.5" />, text: "Самовывоз доступен только для фасовки до 20 л. Бочки 200 л доступны только для доставки по городу и до транспортной компании", variant: "warning" },
@@ -168,7 +168,7 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
     const tcName = selectedTC === "custom" ? customTCName : transportCompanies.find(tc => tc.id === selectedTC)?.name || selectedTC;
     const deliveryLabel =
       deliveryType === "pickup"
-        ? "Самовывоз (Некрасовская 69 стр 1)"
+        ? "Самовывоз (г. Владивосток, Некрасовская 69 стр 1)"
         : deliveryType === "city"
         ? "Доставка по городу"
         : `Доставка по России (${tcName})`;
