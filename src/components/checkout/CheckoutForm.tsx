@@ -21,8 +21,8 @@ const individualDeliveryOptions: DeliveryOption[] = [
   {
     id: "pickup",
     icon: <MapPin className="h-5 w-5" />,
-    title: "Пункт выдачи",
-    subtitle: "Некрасовская 69 стр 1 · завтра",
+    title: "ПВЗ «Вмасле»",
+    subtitle: "Некрасовская 69 стр 1 · товар будет доставлен завтра",
   },
   {
     id: "city",
@@ -33,7 +33,7 @@ const individualDeliveryOptions: DeliveryOption[] = [
   {
     id: "shipping",
     icon: <Package className="h-5 w-5" />,
-    title: "Транспортная компания",
+    title: "Транспортной компанией",
     subtitle: "Отправка по России",
   },
 ];
