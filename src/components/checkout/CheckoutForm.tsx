@@ -10,11 +10,18 @@ import { MapPin, Truck, Package, Building2, User, ChevronLeft, Clock, CalendarCh
 type CustomerType = "individual" | "business";
 type DeliveryType = "pickup" | "city" | "shipping";
 
+interface DeliveryDetail {
+  icon: React.ReactNode;
+  text: string;
+  highlight?: boolean;
+}
+
 interface DeliveryOption {
   id: DeliveryType;
   icon: React.ReactNode;
   title: string;
   subtitle: string;
+  details?: DeliveryDetail[];
 }
 
 const individualDeliveryOptions: DeliveryOption[] = [
@@ -22,7 +29,12 @@ const individualDeliveryOptions: DeliveryOption[] = [
     id: "pickup",
     icon: <MapPin className="h-5 w-5" />,
     title: "ПВЗ «Вмасле»",
-    subtitle: "Некрасовская 69 стр 1 · товар будет доставлен завтра\nПн–Пт: 10:00–18:00 · Сб, Вс — выходной",
+    subtitle: "Самовывоз",
+    details: [
+      { icon: <MapPin className="h-3.5 w-3.5" />, text: "Некрасовская 69 стр 1" },
+      { icon: <Clock className="h-3.5 w-3.5" />, text: "Пн–Пт: 10:00–18:00 · Сб, Вс — выходной" },
+      { icon: <CalendarCheck className="h-3.5 w-3.5" />, text: "Товар будет доставлен завтра", highlight: true },
+    ],
   },
   {
     id: "city",
@@ -43,7 +55,11 @@ const businessDeliveryOptions: DeliveryOption[] = [
     id: "pickup",
     icon: <MapPin className="h-5 w-5" />,
     title: "ПВЗ «Вмасле»",
-    subtitle: "Некрасовская 69 стр 1\nПн–Пт: 10:00–18:00 · Сб, Вс — выходной",
+    subtitle: "Самовывоз",
+    details: [
+      { icon: <MapPin className="h-3.5 w-3.5" />, text: "Некрасовская 69 стр 1" },
+      { icon: <Clock className="h-3.5 w-3.5" />, text: "Пн–Пт: 10:00–18:00 · Сб, Вс — выходной" },
+    ],
   },
   {
     id: "city",
