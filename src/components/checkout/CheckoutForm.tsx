@@ -5,16 +5,23 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 import { useToast } from "@/hooks/use-toast";
 import { sendTelegramNotification } from "@/lib/telegram";
-import { MapPin, Truck, Package, Building2, User, ChevronLeft } from "lucide-react";
+import { MapPin, Truck, Package, Building2, User, ChevronLeft, Clock, CalendarCheck } from "lucide-react";
 
 type CustomerType = "individual" | "business";
 type DeliveryType = "pickup" | "city" | "shipping";
+
+interface DeliveryDetail {
+  icon: React.ReactNode;
+  text: string;
+  highlight?: boolean;
+}
 
 interface DeliveryOption {
   id: DeliveryType;
   icon: React.ReactNode;
   title: string;
   subtitle: string;
+  details?: DeliveryDetail[];
 }
 
 const individualDeliveryOptions: DeliveryOption[] = [
@@ -22,7 +29,12 @@ const individualDeliveryOptions: DeliveryOption[] = [
     id: "pickup",
     icon: <MapPin className="h-5 w-5" />,
     title: "ПВЗ «Вмасле»",
-    subtitle: "Некрасовская 69 стр 1 · товар будет доставлен завтра\nПн–Пт: 10:00–18:00 · Сб, Вс — выходной",
+    subtitle: "Самовывоз",
+    details: [
+      { icon: <MapPin className="h-3.5 w-3.5" />, text: "Некрасовская 69 стр 1" },
+      { icon: <Clock className="h-3.5 w-3.5" />, text: "Пн–Пт: 10:00–18:00 · Сб, Вс — выходной" },
+      { icon: <CalendarCheck className="h-3.5 w-3.5" />, text: "Товар будет доставлен завтра", highlight: true },
+    ],
   },
   {
     id: "city",
@@ -43,7 +55,11 @@ const businessDeliveryOptions: DeliveryOption[] = [
     id: "pickup",
     icon: <MapPin className="h-5 w-5" />,
     title: "ПВЗ «Вмасле»",
-    subtitle: "Некрасовская 69 стр 1\nПн–Пт: 10:00–18:00 · Сб, Вс — выходной",
+    subtitle: "Самовывоз",
+    details: [
+      { icon: <MapPin className="h-3.5 w-3.5" />, text: "Некрасовская 69 стр 1" },
+      { icon: <Clock className="h-3.5 w-3.5" />, text: "Пн–Пт: 10:00–18:00 · Сб, Вс — выходной" },
+    ],
   },
   {
     id: "city",
@@ -287,11 +303,19 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
                     }`}>
                       {opt.icon}
                     </div>
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                       <div className="text-sm font-medium text-foreground">{opt.title}</div>
-                      {opt.subtitle.split("\n").map((line, i) => (
-                        <div key={i} className="text-xs text-muted-foreground">{line}</div>
-                      ))}
+                      <div className="text-xs text-muted-foreground">{opt.subtitle}</div>
+                      {deliveryType === opt.id && opt.details && (
+                        <div className="mt-2.5 space-y-1.5 pt-2.5 border-t border-border/50">
+                          {opt.details.map((detail, i) => (
+                            <div key={i} className={`flex items-center gap-2 text-xs ${detail.highlight ? "text-accent font-medium" : "text-muted-foreground"}`}>
+                              <span className="shrink-0">{detail.icon}</span>
+                              <span>{detail.text}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                     <div className={`ml-auto w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
                       deliveryType === opt.id ? "border-primary" : "border-muted-foreground/30"
