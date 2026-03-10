@@ -385,8 +385,26 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
             </div>
           </div>
 
-          {/* Submit */}
-          <div className="p-6 border-t border-border">
+          {/* Privacy consent & Submit */}
+          <div className="px-6 pb-6 pt-4 border-t border-border space-y-4">
+            <label className="flex items-start gap-3 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={privacyAccepted}
+                onChange={(e) => {
+                  setPrivacyAccepted(e.target.checked);
+                  if (errors.privacy) setErrors((p) => ({ ...p, privacy: "" }));
+                }}
+                className="mt-0.5 h-4 w-4 rounded border-border accent-accent shrink-0"
+              />
+              <span className={`text-xs leading-relaxed ${errors.privacy ? "text-destructive" : "text-muted-foreground"}`}>
+                Согласен с{" "}
+                <a href="/privacy" target="_blank" className="text-accent underline underline-offset-2 hover:text-accent/80">
+                  политикой конфиденциальности
+                </a>{" "}
+                и обработки персональных данных
+              </span>
+            </label>
             <Button
               className="w-full h-12 gradient-primary hover:gradient-primary-hover text-primary-foreground font-semibold rounded-full"
               onClick={handleSubmit}
