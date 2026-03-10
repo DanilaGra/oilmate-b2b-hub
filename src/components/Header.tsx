@@ -460,11 +460,19 @@ const Header = () => {
                     setIsCityOpen(false);
                   }}
                 >
-                  <MapPin className={cn(
-                    "h-5 w-5 shrink-0",
-                    selectedCity === city.id ? "text-primary" : "text-muted-foreground"
-                  )} />
-                  <span className="font-medium flex-1">{city.name}</span>
+                  <div className="flex-1">
+                    <MapPin className={cn(
+                      "h-5 w-5 shrink-0 inline-block mr-3 align-middle",
+                      selectedCity === city.id ? "text-primary" : "text-muted-foreground"
+                    )} />
+                    <span className="font-medium align-middle">{city.name}</span>
+                    <p className={cn(
+                      "text-xs mt-1 ml-8",
+                      selectedCity === city.id ? "text-primary/70" : "text-muted-foreground"
+                    )}>
+                      {city.description}
+                    </p>
+                  </div>
                   {selectedCity === city.id && (
                     <Check className="h-5 w-5 text-primary shrink-0" />
                   )}
