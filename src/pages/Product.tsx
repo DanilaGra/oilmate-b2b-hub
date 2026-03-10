@@ -296,6 +296,19 @@ const Product = () => {
                 </Button>
               </div>
 
+              {/* Brand card */}
+              <div className="flex items-center gap-3 p-3 md:p-4 rounded-xl border border-border bg-muted/50 mb-6 md:mb-8">
+                <div className="flex-shrink-0 h-12 w-12 rounded-lg bg-background border border-border flex items-center justify-center overflow-hidden">
+                  <span className="text-lg font-bold text-primary">{product.brand.charAt(0)}</span>
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-foreground">{product.brand}</p>
+                  <p className="text-xs text-muted-foreground leading-snug mt-0.5">
+                    Официальный поставщик продукции {product.brand}
+                  </p>
+                </div>
+              </div>
+
               {/* Description */}
               <div className="mb-6 md:mb-8">
                 <h2 className="text-base md:text-lg font-semibold text-foreground mb-2 md:mb-3">Описание</h2>
