@@ -127,6 +127,9 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
   const [bizAddress, setBizAddress] = useState("");
   const [bizCity, setBizCity] = useState("");
 
+  const [selectedTC, setSelectedTC] = useState<string>("kit");
+  const [customTCName, setCustomTCName] = useState("");
+
   const [comment, setComment] = useState("");
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
