@@ -66,7 +66,7 @@ const businessDeliveryOptions: DeliveryOption[] = [
     id: "city",
     icon: <Truck className="h-5 w-5" />,
     title: "Доставка по городу",
-    subtitle: "Курьером на адрес компании",
+    subtitle: "По адресу вашей компании",
   },
   {
     id: "shipping",
