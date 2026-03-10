@@ -238,9 +238,9 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
           <div className="space-y-3">
             <button
               onClick={() => handleSelectType("individual")}
-              className="w-full flex items-center gap-4 p-5 rounded-2xl border border-border hover:border-primary hover:bg-primary/5 transition-all text-left group"
+              className="w-full flex items-center gap-4 p-5 rounded-2xl border border-border hover:border-accent hover:bg-accent/5 transition-all text-left group"
             >
-              <div className="w-14 h-14 rounded-2xl bg-muted group-hover:bg-primary group-hover:text-primary-foreground flex items-center justify-center shrink-0 transition-colors">
+              <div className="w-14 h-14 rounded-2xl bg-muted group-hover:bg-gradient-to-br group-hover:from-accent group-hover:to-blue-400 group-hover:text-accent-foreground flex items-center justify-center shrink-0 transition-all">
                 <User className="h-7 w-7" />
               </div>
               <div>
