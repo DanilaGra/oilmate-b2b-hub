@@ -443,7 +443,7 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
                           <div className="w-2.5 h-2.5 rounded-full bg-accent" />
                         )}
                       </div>
-                    </button>
+                    </div>
                   </div>
                 ))}
               </div>
