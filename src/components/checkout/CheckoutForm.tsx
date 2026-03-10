@@ -303,11 +303,19 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
                     }`}>
                       {opt.icon}
                     </div>
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                       <div className="text-sm font-medium text-foreground">{opt.title}</div>
-                      {opt.subtitle.split("\n").map((line, i) => (
-                        <div key={i} className="text-xs text-muted-foreground">{line}</div>
-                      ))}
+                      <div className="text-xs text-muted-foreground">{opt.subtitle}</div>
+                      {deliveryType === opt.id && opt.details && (
+                        <div className="mt-2.5 space-y-1.5 pt-2.5 border-t border-border/50">
+                          {opt.details.map((detail, i) => (
+                            <div key={i} className={`flex items-center gap-2 text-xs ${detail.highlight ? "text-accent font-medium" : "text-muted-foreground"}`}>
+                              <span className="shrink-0">{detail.icon}</span>
+                              <span>{detail.text}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                     <div className={`ml-auto w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
                       deliveryType === opt.id ? "border-primary" : "border-muted-foreground/30"
