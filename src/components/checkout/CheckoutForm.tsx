@@ -247,7 +247,7 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
                 <div className="text-base font-semibold text-foreground">Физическое лицо</div>
                 <div className="text-sm text-muted-foreground mt-0.5">Покупка для личного использования</div>
               </div>
-              <ChevronLeft className="h-5 w-5 ml-auto rotate-180 text-muted-foreground group-hover:text-primary transition-colors" />
+              <ChevronLeft className="h-5 w-5 ml-auto rotate-180 text-muted-foreground group-hover:text-accent transition-colors" />
             </button>
 
             <button
