@@ -5,6 +5,7 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { searchProducts, categoryNames } from "@/data/products";
 import { useCart } from "@/contexts/CartContext";
+import { cn } from "@/lib/utils";
 
 const catalogCategories = [
   { id: "motor", name: "Моторные масла", icon: Droplet },
