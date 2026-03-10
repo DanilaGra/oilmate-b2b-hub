@@ -34,7 +34,7 @@ const BottomNav = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-card/95 backdrop-blur-lg border-t border-border/50 safe-bottom">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-card/95 backdrop-blur-lg rounded-t-2xl shadow-[0_-2px_20px_rgba(0,0,0,0.06)] safe-bottom">
       <div className="flex items-center justify-around h-[4.25rem]">
         {items.map((item) => {
           const Icon = item.icon;
@@ -50,7 +50,7 @@ const BottomNav = () => {
               <div className="relative">
                 <Icon
                   className={cn(
-                    "h-6 w-6 transition-all",
+                    "h-5 w-5 transition-all",
                     item.active && "stroke-[2.5]"
                   )}
                 />
