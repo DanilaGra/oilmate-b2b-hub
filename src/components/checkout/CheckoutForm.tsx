@@ -352,96 +352,87 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
                             ))}
                           </div>
                         )}
-                      </div>
-                      <div className={`ml-auto w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                        deliveryType === opt.id ? "border-accent" : "border-muted-foreground/30"
-                      }`}>
-                        {deliveryType === opt.id && (
-                          <div className="w-2.5 h-2.5 rounded-full bg-accent" />
-                        )}
-                      </div>
-                    </button>
-                    
-                    {/* TC selection inside shipping option for individuals */}
-                    {opt.id === "shipping" && deliveryType === "shipping" && customerType === "individual" && (
-                      <div className="mt-2 ml-4 space-y-1.5">
-                        {transportCompanies.map((tc) => (
-                          <button
-                            key={tc.id}
-                            type="button"
-                            onClick={() => setSelectedTC(tc.id)}
-                            className={`w-full flex items-start gap-2.5 p-2.5 rounded-lg border transition-all text-left ${
-                              selectedTC === tc.id
-                                ? "border-accent bg-accent/5"
-                                : "border-border/60 hover:border-muted-foreground/30"
-                            }`}
-                          >
-                            <div className={`mt-0.5 w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                              selectedTC === tc.id ? "border-accent" : "border-muted-foreground/30"
-                            }`}>
-                              {selectedTC === tc.id && <div className="w-1.5 h-1.5 rounded-full bg-accent" />}
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2">
-                                <span className="text-xs font-medium text-foreground">{tc.name}</span>
-                                {tc.badge && (
-                                  <span className="text-[10px] font-semibold text-green-700 bg-green-100 border border-green-300 rounded-full px-2 py-0.5 leading-none">
-                                    {tc.badge}
-                                  </span>
+                        {/* TC selection inside shipping block */}
+                        {opt.id === "shipping" && deliveryType === "shipping" && customerType === "individual" && (
+                          <div className="mt-3 space-y-1.5 pt-3 border-t border-border/50" onClick={(e) => e.stopPropagation()}>
+                            <div className="text-xs font-medium text-foreground mb-1.5">Выберите ТК</div>
+                            {transportCompanies.map((tc) => (
+                              <button
+                                key={tc.id}
+                                type="button"
+                                onClick={(e) => { e.stopPropagation(); setSelectedTC(tc.id); }}
+                                className={`w-full flex items-start gap-2.5 p-2.5 rounded-lg border transition-all text-left ${
+                                  selectedTC === tc.id
+                                    ? "border-accent bg-accent/5"
+                                    : "border-border/60 hover:border-muted-foreground/30"
+                                }`}
+                              >
+                                <div className={`mt-0.5 w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                                  selectedTC === tc.id ? "border-accent" : "border-muted-foreground/30"
+                                }`}>
+                                  {selectedTC === tc.id && <div className="w-1.5 h-1.5 rounded-full bg-accent" />}
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-xs font-medium text-foreground">{tc.name}</span>
+                                    {tc.badge && (
+                                      <span className="text-[10px] font-semibold text-green-700 bg-green-100 border border-green-300 rounded-full px-2 py-0.5 leading-none">
+                                        {tc.badge}
+                                      </span>
+                                    )}
+                                  </div>
+                                  <div className="text-[11px] text-muted-foreground mt-0.5">{tc.description}</div>
+                                  <a
+                                    href={tc.calcUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={(e) => e.stopPropagation()}
+                                    className="inline-flex items-center gap-1 text-[11px] text-accent hover:text-accent/80 mt-1 underline underline-offset-2"
+                                  >
+                                    Рассчитать стоимость
+                                    <ExternalLink className="h-2.5 w-2.5" />
+                                  </a>
+                                </div>
+                              </button>
+                            ))}
+                            
+                            {/* Custom TC */}
+                            <button
+                              type="button"
+                              onClick={(e) => { e.stopPropagation(); setSelectedTC("custom"); }}
+                              className={`w-full flex items-start gap-2.5 p-2.5 rounded-lg border transition-all text-left ${
+                                selectedTC === "custom"
+                                  ? "border-accent bg-accent/5"
+                                  : "border-border/60 hover:border-muted-foreground/30"
+                              }`}
+                            >
+                              <div className={`mt-0.5 w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                                selectedTC === "custom" ? "border-accent" : "border-muted-foreground/30"
+                              }`}>
+                                {selectedTC === "custom" && <div className="w-1.5 h-1.5 rounded-full bg-accent" />}
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <div className="text-xs font-medium text-foreground mb-1">Другая ТК</div>
+                                {selectedTC === "custom" ? (
+                                  <div onClick={(e) => e.stopPropagation()}>
+                                    <Input
+                                      placeholder="Название транспортной компании"
+                                      value={customTCName}
+                                      onChange={(e) => {
+                                        setCustomTCName(e.target.value);
+                                        if (errors.customTC) setErrors((p) => ({ ...p, customTC: "" }));
+                                      }}
+                                      className={`h-8 text-xs ${errors.customTC ? "border-destructive" : ""}`}
+                                    />
+                                    {errors.customTC && <p className="text-[11px] text-destructive mt-1">{errors.customTC}</p>}
+                                  </div>
+                                ) : (
+                                  <div className="text-[11px] text-muted-foreground">Укажите свою транспортную компанию</div>
                                 )}
                               </div>
-                              <div className="text-[11px] text-muted-foreground mt-0.5">{tc.description}</div>
-                              <a
-                                href={tc.calcUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                onClick={(e) => e.stopPropagation()}
-                                className="inline-flex items-center gap-1 text-[11px] text-accent hover:text-accent/80 mt-1 underline underline-offset-2"
-                              >
-                                Рассчитать стоимость
-                                <ExternalLink className="h-2.5 w-2.5" />
-                              </a>
-                            </div>
-                          </button>
-                        ))}
-                        
-                        {/* Custom TC - unified block with inline input */}
-                        <button
-                          type="button"
-                          onClick={() => setSelectedTC("custom")}
-                          className={`w-full flex items-start gap-2.5 p-2.5 rounded-lg border transition-all text-left ${
-                            selectedTC === "custom"
-                              ? "border-accent bg-accent/5"
-                              : "border-border/60 hover:border-muted-foreground/30"
-                          }`}
-                        >
-                          <div className={`mt-0.5 w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                            selectedTC === "custom" ? "border-accent" : "border-muted-foreground/30"
-                          }`}>
-                            {selectedTC === "custom" && <div className="w-1.5 h-1.5 rounded-full bg-accent" />}
+                            </button>
                           </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="text-xs font-medium text-foreground mb-1">Другая ТК</div>
-                            {selectedTC === "custom" ? (
-                              <div onClick={(e) => e.stopPropagation()}>
-                                <Input
-                                  placeholder="Название транспортной компании"
-                                  value={customTCName}
-                                  onChange={(e) => {
-                                    setCustomTCName(e.target.value);
-                                    if (errors.customTC) setErrors((p) => ({ ...p, customTC: "" }));
-                                  }}
-                                  className={`h-8 text-xs ${errors.customTC ? "border-destructive" : ""}`}
-                                />
-                                {errors.customTC && <p className="text-[11px] text-destructive mt-1">{errors.customTC}</p>}
-                              </div>
-                            ) : (
-                              <div className="text-[11px] text-muted-foreground">Укажите свою транспортную компанию</div>
-                            )}
-                          </div>
-                        </button>
-                      </div>
-                    )}
+                        )}
                   </div>
                 ))}
               </div>
