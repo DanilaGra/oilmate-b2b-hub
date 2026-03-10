@@ -144,6 +144,7 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
       if (!phone.trim() || phone.trim().length < 10) newErrors.phone = "Введите номер телефона";
       if (deliveryType === "city" && !address.trim()) newErrors.address = "Введите адрес доставки";
       if (deliveryType === "shipping" && !city.trim()) newErrors.city = "Введите город";
+      if (deliveryType === "shipping" && selectedTC === "custom" && !customTCName.trim()) newErrors.customTC = "Введите название ТК";
     } else {
       if (!inn.trim() || (inn.trim().length !== 10 && inn.trim().length !== 12)) newErrors.inn = "ИНН должен содержать 10 или 12 цифр";
       if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) newErrors.email = "Введите корректный email";
