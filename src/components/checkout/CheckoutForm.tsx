@@ -12,6 +12,7 @@ interface TransportCompany {
   name: string;
   description: string;
   calcUrl: string;
+  badge?: string;
 }
 
 const transportCompanies: TransportCompany[] = [
