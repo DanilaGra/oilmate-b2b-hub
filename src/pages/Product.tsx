@@ -222,9 +222,13 @@ const Product = () => {
 
             {/* Product info */}
             <div>
-              <h1 className="text-xl md:text-2xl font-bold text-foreground mb-3 md:mb-4">
+              <h1 className="text-xl md:text-2xl font-bold text-foreground mb-2">
                 {product.name}
               </h1>
+
+              <p className="text-sm text-muted-foreground mb-3 md:mb-4">
+                Артикул: <span className="font-medium text-foreground">{product.id.toString().padStart(6, '0')}</span>
+              </p>
 
               {/* Stock info */}
               <div className="flex items-center gap-1.5 text-sm text-green-600 mb-4 md:mb-6">
