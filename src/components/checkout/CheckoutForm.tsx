@@ -238,30 +238,30 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
           <div className="space-y-3">
             <button
               onClick={() => handleSelectType("individual")}
-              className="w-full flex items-center gap-4 p-5 rounded-2xl border border-border hover:border-primary hover:bg-primary/5 transition-all text-left group"
+              className="w-full flex items-center gap-4 p-5 rounded-2xl border border-border hover:border-accent hover:bg-accent/5 transition-all text-left group"
             >
-              <div className="w-14 h-14 rounded-2xl bg-muted group-hover:bg-primary group-hover:text-primary-foreground flex items-center justify-center shrink-0 transition-colors">
+              <div className="w-14 h-14 rounded-2xl bg-muted group-hover:bg-gradient-to-br group-hover:from-accent group-hover:to-blue-400 group-hover:text-accent-foreground flex items-center justify-center shrink-0 transition-all">
                 <User className="h-7 w-7" />
               </div>
               <div>
                 <div className="text-base font-semibold text-foreground">Физическое лицо</div>
                 <div className="text-sm text-muted-foreground mt-0.5">Покупка для личного использования</div>
               </div>
-              <ChevronLeft className="h-5 w-5 ml-auto rotate-180 text-muted-foreground group-hover:text-primary transition-colors" />
+              <ChevronLeft className="h-5 w-5 ml-auto rotate-180 text-muted-foreground group-hover:text-accent transition-colors" />
             </button>
 
             <button
               onClick={() => handleSelectType("business")}
-              className="w-full flex items-center gap-4 p-5 rounded-2xl border border-border hover:border-primary hover:bg-primary/5 transition-all text-left group"
+              className="w-full flex items-center gap-4 p-5 rounded-2xl border border-border hover:border-accent hover:bg-accent/5 transition-all text-left group"
             >
-              <div className="w-14 h-14 rounded-2xl bg-muted group-hover:bg-primary group-hover:text-primary-foreground flex items-center justify-center shrink-0 transition-colors">
+              <div className="w-14 h-14 rounded-2xl bg-muted group-hover:bg-gradient-to-br group-hover:from-accent group-hover:to-blue-400 group-hover:text-accent-foreground flex items-center justify-center shrink-0 transition-all">
                 <Building2 className="h-7 w-7" />
               </div>
               <div>
                 <div className="text-base font-semibold text-foreground">Юридическое лицо</div>
                 <div className="text-sm text-muted-foreground mt-0.5">Покупка для компании с оформлением документов</div>
               </div>
-              <ChevronLeft className="h-5 w-5 ml-auto rotate-180 text-muted-foreground group-hover:text-primary transition-colors" />
+              <ChevronLeft className="h-5 w-5 ml-auto rotate-180 text-muted-foreground group-hover:text-accent transition-colors" />
             </button>
           </div>
 
@@ -294,12 +294,12 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
                     onClick={() => setDeliveryType(opt.id)}
                     className={`w-full flex items-center gap-3 p-3.5 rounded-xl border transition-all text-left ${
                       deliveryType === opt.id
-                        ? "border-primary bg-primary/5 ring-1 ring-primary"
+                        ? "border-accent bg-accent/5 ring-1 ring-accent"
                         : "border-border hover:border-muted-foreground/30"
                     }`}
                   >
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
-                      deliveryType === opt.id ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-all ${
+                      deliveryType === opt.id ? "bg-gradient-to-br from-accent to-blue-400 text-accent-foreground" : "bg-muted text-muted-foreground"
                     }`}>
                       {opt.icon}
                     </div>
@@ -318,10 +318,10 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
                       )}
                     </div>
                     <div className={`ml-auto w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                      deliveryType === opt.id ? "border-primary" : "border-muted-foreground/30"
+                      deliveryType === opt.id ? "border-accent" : "border-muted-foreground/30"
                     }`}>
                       {deliveryType === opt.id && (
-                        <div className="w-2.5 h-2.5 rounded-full bg-primary" />
+                        <div className="w-2.5 h-2.5 rounded-full bg-accent" />
                       )}
                     </div>
                   </button>
