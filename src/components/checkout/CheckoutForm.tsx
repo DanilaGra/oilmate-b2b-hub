@@ -5,7 +5,21 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 import { useToast } from "@/hooks/use-toast";
 import { sendTelegramNotification } from "@/lib/telegram";
-import { MapPin, Truck, Package, Building2, User, ChevronLeft, Clock, CalendarCheck, CircleCheck, Info } from "lucide-react";
+import { MapPin, Truck, Package, Building2, User, ChevronLeft, Clock, CalendarCheck, CircleCheck, Info, ExternalLink } from "lucide-react";
+
+interface TransportCompany {
+  id: string;
+  name: string;
+  description: string;
+  calcUrl: string;
+}
+
+const transportCompanies: TransportCompany[] = [
+  { id: "kit", name: "ТК Кит", description: "Самый бюджетный вариант, заказ до 12 кг не более 500 ₽", calcUrl: "https://tkkit.ru/calculator" },
+  { id: "cdek", name: "СДЭК", description: "Экспресс-доставка по всей России", calcUrl: "https://www.cdek.ru/ru/calculator" },
+  { id: "dellin", name: "Деловые Линии", description: "Надёжная доставка для крупных грузов", calcUrl: "https://www.dellin.ru/calculator/" },
+  { id: "troika", name: "Тройка ДВ", description: "Доставка по Дальнему Востоку", calcUrl: "https://troikadv.ru" },
+];
 
 type CustomerType = "individual" | "business";
 type DeliveryType = "pickup" | "city" | "shipping";
@@ -113,6 +127,9 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
   const [bizAddress, setBizAddress] = useState("");
   const [bizCity, setBizCity] = useState("");
 
+  const [selectedTC, setSelectedTC] = useState<string>("kit");
+  const [customTCName, setCustomTCName] = useState("");
+
   const [comment, setComment] = useState("");
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -127,6 +144,7 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
       if (!phone.trim() || phone.trim().length < 10) newErrors.phone = "Введите номер телефона";
       if (deliveryType === "city" && !address.trim()) newErrors.address = "Введите адрес доставки";
       if (deliveryType === "shipping" && !city.trim()) newErrors.city = "Введите город";
+      if (deliveryType === "shipping" && selectedTC === "custom" && !customTCName.trim()) newErrors.customTC = "Введите название ТК";
     } else {
       if (!inn.trim() || (inn.trim().length !== 10 && inn.trim().length !== 12)) newErrors.inn = "ИНН должен содержать 10 или 12 цифр";
       if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) newErrors.email = "Введите корректный email";
@@ -146,12 +164,13 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
 
     setIsSubmitting(true);
 
+    const tcName = selectedTC === "custom" ? customTCName : transportCompanies.find(tc => tc.id === selectedTC)?.name || selectedTC;
     const deliveryLabel =
       deliveryType === "pickup"
         ? "Самовывоз (Некрасовская 69 стр 1)"
         : deliveryType === "city"
         ? "Доставка по городу"
-        : "Доставка по России (ТК)";
+        : `Доставка по России (${tcName})`;
 
     const orderData = {
       name: customerType === "individual" ? fullName : `Юр. лицо (ИНН: ${inn})`,
@@ -356,7 +375,86 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
                   {renderField("ФИО", fullName, setFullName, "fullName", "Иванов Иван Иванович")}
                   {renderField("Телефон", phone, setPhone, "phone", "+7 (999) 123-45-67", "tel")}
                   {deliveryType === "city" && renderField("Адрес доставки", address, setAddress, "address", "ул. Примерная, д. 1, кв. 10")}
-                  {deliveryType === "shipping" && renderField("Город", city, setCity, "city", "Москва")}
+                  {deliveryType === "shipping" && (
+                    <>
+                      {renderField("Город", city, setCity, "city", "Москва")}
+                      
+                      {/* Transport company selection */}
+                      <div>
+                        <label className="text-sm font-medium mb-2 block text-foreground">Транспортная компания</label>
+                        <div className="space-y-2">
+                          {transportCompanies.map((tc) => (
+                            <button
+                              key={tc.id}
+                              type="button"
+                              onClick={() => setSelectedTC(tc.id)}
+                              className={`w-full flex items-start gap-3 p-3 rounded-xl border transition-all text-left ${
+                                selectedTC === tc.id
+                                  ? "border-accent bg-accent/5 ring-1 ring-accent"
+                                  : "border-border hover:border-muted-foreground/30"
+                              }`}
+                            >
+                              <div className={`mt-0.5 w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                                selectedTC === tc.id ? "border-accent" : "border-muted-foreground/30"
+                              }`}>
+                                {selectedTC === tc.id && <div className="w-2 h-2 rounded-full bg-accent" />}
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <div className="text-sm font-medium text-foreground">{tc.name}</div>
+                                <div className="text-xs text-muted-foreground mt-0.5">{tc.description}</div>
+                                <a
+                                  href={tc.calcUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  onClick={(e) => e.stopPropagation()}
+                                  className="inline-flex items-center gap-1 text-xs text-accent hover:text-accent/80 mt-1.5 underline underline-offset-2"
+                                >
+                                  Рассчитать стоимость
+                                  <ExternalLink className="h-3 w-3" />
+                                </a>
+                              </div>
+                            </button>
+                          ))}
+                          
+                          {/* Custom TC option */}
+                          <button
+                            type="button"
+                            onClick={() => setSelectedTC("custom")}
+                            className={`w-full flex items-start gap-3 p-3 rounded-xl border transition-all text-left ${
+                              selectedTC === "custom"
+                                ? "border-accent bg-accent/5 ring-1 ring-accent"
+                                : "border-border hover:border-muted-foreground/30"
+                            }`}
+                          >
+                            <div className={`mt-0.5 w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                              selectedTC === "custom" ? "border-accent" : "border-muted-foreground/30"
+                            }`}>
+                              {selectedTC === "custom" && <div className="w-2 h-2 rounded-full bg-accent" />}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="text-sm font-medium text-foreground">Другая ТК</div>
+                              <div className="text-xs text-muted-foreground mt-0.5">Укажите свою транспортную компанию</div>
+                            </div>
+                          </button>
+                          
+                          {selectedTC === "custom" && (
+                            <div className="ml-7">
+                              <Input
+                                placeholder="Название транспортной компании"
+                                value={customTCName}
+                                onChange={(e) => {
+                                  setCustomTCName(e.target.value);
+                                  if (errors.customTC) setErrors((p) => ({ ...p, customTC: "" }));
+                                }}
+                                className={errors.customTC ? "border-destructive" : ""}
+                              />
+                              {errors.customTC && <p className="text-xs text-destructive mt-1">{errors.customTC}</p>}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </>
               ) : (
                 <>
