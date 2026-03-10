@@ -318,10 +318,10 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
                       )}
                     </div>
                     <div className={`ml-auto w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                      deliveryType === opt.id ? "border-primary" : "border-muted-foreground/30"
+                      deliveryType === opt.id ? "border-accent" : "border-muted-foreground/30"
                     }`}>
                       {deliveryType === opt.id && (
-                        <div className="w-2.5 h-2.5 rounded-full bg-primary" />
+                        <div className="w-2.5 h-2.5 rounded-full bg-accent" />
                       )}
                     </div>
                   </button>
