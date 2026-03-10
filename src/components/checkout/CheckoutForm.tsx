@@ -71,6 +71,10 @@ const businessDeliveryOptions: DeliveryOption[] = [
     icon: <Truck className="h-5 w-5" />,
     title: "Доставка по городу",
     subtitle: "По адресу вашей компании",
+    details: [
+      { icon: <CalendarCheck className="h-3.5 w-3.5" />, text: "Заказ будет доставлен завтра", highlight: true },
+      { icon: <Truck className="h-3.5 w-3.5" />, text: "Бесплатная доставка", highlight: true },
+    ],
   },
   {
     id: "shipping",
