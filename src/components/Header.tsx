@@ -1,4 +1,4 @@
-import { Search, ShoppingCart, Menu, X, ChevronRight, Droplet, Cog, Gauge, Factory, Snowflake, Wrench, MapPin, ChevronDown, Check } from "lucide-react";
+import { Search, ShoppingCart, Menu, X, ChevronRight, Droplet, Cog, Gauge, Factory, Snowflake, Wrench, MapPin, ChevronDown, Check, Package, Truck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState, useRef, useEffect } from "react";
