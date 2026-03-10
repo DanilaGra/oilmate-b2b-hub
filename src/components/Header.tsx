@@ -281,6 +281,41 @@ const Header = () => {
         </div>
       </header>
 
+      {/* Sticky mobile search on scroll */}
+      <div className={cn(
+        "fixed top-0 left-0 right-0 z-40 md:hidden bg-card/95 backdrop-blur-lg px-3 py-2 transition-all duration-300",
+        isScrolled ? "translate-y-0 opacity-100 shadow-md" : "-translate-y-full opacity-0 pointer-events-none"
+      )}>
+        <form onSubmit={handleSearchSubmit} className="relative">
+          <Input
+            placeholder="Поиск..."
+            className="h-10 pl-4 pr-10 rounded-full border-2 border-border focus:border-border focus-visible:ring-0 focus-visible:ring-offset-0 bg-background w-full text-sm"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onFocus={() => setIsSearchFocused(true)}
+          />
+          {searchQuery && (
+            <Button
+              type="button"
+              size="icon"
+              variant="ghost"
+              className="absolute right-9 top-0.5 h-9 w-9 rounded-full hover:bg-muted"
+              onClick={clearSearch}
+            >
+              <X className="h-4 w-4 text-muted-foreground" />
+            </Button>
+          )}
+          <Button
+            type="submit"
+            size="icon"
+            variant="ghost"
+            className="absolute right-0.5 top-0.5 h-9 w-9 rounded-full hover:bg-muted"
+          >
+            <Search className="h-5 w-5 text-muted-foreground" />
+          </Button>
+        </form>
+      </div>
+
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-50 md:hidden">
