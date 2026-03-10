@@ -272,7 +272,7 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
               </div>
               <div>
                 <div className="text-base font-semibold text-foreground">Юридическое лицо</div>
-                <div className="text-sm text-muted-foreground mt-0.5">Покупка для компании с оформлением документов</div>
+                <div className="text-sm text-muted-foreground mt-0.5">Покупка для компаний с запросом счёта и закрывающими документами</div>
               </div>
               <ChevronLeft className="h-5 w-5 ml-auto rotate-180 text-muted-foreground group-hover:text-accent transition-colors" />
             </button>
