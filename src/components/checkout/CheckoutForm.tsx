@@ -289,7 +289,9 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
                     </div>
                     <div className="min-w-0">
                       <div className="text-sm font-medium text-foreground">{opt.title}</div>
-                      <div className="text-xs text-muted-foreground">{opt.subtitle}</div>
+                      {opt.subtitle.split("\n").map((line, i) => (
+                        <div key={i} className="text-xs text-muted-foreground">{line}</div>
+                      ))}
                     </div>
                     <div className={`ml-auto w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
                       deliveryType === opt.id ? "border-primary" : "border-muted-foreground/30"
