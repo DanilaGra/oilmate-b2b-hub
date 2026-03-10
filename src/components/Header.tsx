@@ -136,6 +136,22 @@ const Header = () => {
           </div>
         </div>
 
+        {/* Mobile city selector */}
+        <div className="md:hidden container pt-2 pb-0">
+          <div className="flex items-center gap-1 text-sm">
+            <MapPin className="h-3.5 w-3.5 text-primary shrink-0" />
+            <Select value={selectedCity} onValueChange={setSelectedCity}>
+              <SelectTrigger className="h-auto border-0 bg-transparent p-0 text-sm font-medium text-foreground shadow-none focus:ring-0 focus:ring-offset-0 gap-1 w-auto">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="vladivostok">Владивосток</SelectItem>
+                <SelectItem value="other">Другой город</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
         {/* Main header */}
         <div className="container py-3 md:py-4">
           <div className="flex items-center gap-2 md:gap-4">
