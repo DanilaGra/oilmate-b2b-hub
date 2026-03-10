@@ -11,7 +11,7 @@ type CustomerType = "individual" | "business";
 type DeliveryType = "pickup" | "city" | "shipping";
 
 interface DeliveryDetail {
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   text: string;
   highlight?: boolean;
   variant?: "default" | "success";
