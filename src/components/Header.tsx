@@ -425,6 +425,55 @@ const Header = () => {
           </div>
         </div>
       )}
+
+      {/* City Selection Modal */}
+      {isCityOpen && (
+        <div className="fixed inset-0 z-50">
+          <div 
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setIsCityOpen(false)}
+          />
+          <div className="absolute inset-x-0 bottom-0 md:bottom-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:max-w-md md:rounded-2xl bg-card rounded-t-2xl md:rounded-2xl overflow-hidden animate-in slide-in-from-bottom md:slide-in-from-bottom-0 md:fade-in duration-300">
+            <div className="flex items-center justify-between p-5 border-b border-border">
+              <h2 className="text-lg font-semibold">Выберите город</h2>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="rounded-full"
+                onClick={() => setIsCityOpen(false)}
+              >
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+            <div className="p-3">
+              {cities.map((city) => (
+                <button
+                  key={city.id}
+                  className={cn(
+                    "w-full flex items-center gap-4 p-4 rounded-xl transition-colors text-left",
+                    selectedCity === city.id
+                      ? "bg-primary/10 text-primary"
+                      : "hover:bg-muted text-foreground"
+                  )}
+                  onClick={() => {
+                    setSelectedCity(city.id);
+                    setIsCityOpen(false);
+                  }}
+                >
+                  <MapPin className={cn(
+                    "h-5 w-5 shrink-0",
+                    selectedCity === city.id ? "text-primary" : "text-muted-foreground"
+                  )} />
+                  <span className="font-medium flex-1">{city.name}</span>
+                  {selectedCity === city.id && (
+                    <Check className="h-5 w-5 text-primary shrink-0" />
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
