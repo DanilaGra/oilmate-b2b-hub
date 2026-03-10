@@ -1,329 +1,76 @@
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { useCart } from "@/contexts/CartContext";
-import { Minus, Plus, Trash2, ShoppingBag, CheckCircle, Truck, MapPin } from "lucide-react";
+import { Minus, Plus, Trash2, ShoppingBag, CheckCircle } from "lucide-react";
 import { useState } from "react";
 import { categoryNames } from "@/data/products";
-import { z } from "zod";
-import { useToast } from "@/hooks/use-toast";
-import { sendTelegramNotification } from "@/lib/telegram";
-
-const orderSchema = z.object({
-  name: z.string().trim().min(2, "Имя должно содержать минимум 2 символа").max(100),
-  phone: z.string().trim().min(10, "Введите корректный номер телефона").max(20),
-  email: z.string().trim().email("Введите корректный email").max(255),
-  inn: z.string().max(12).optional().or(z.literal("")),
-  city: z.string().max(100).optional().or(z.literal("")),
-  address: z.string().max(300).optional().or(z.literal("")),
-  deliveryType: z.enum(["pickup", "delivery"]).optional(),
-  comment: z.string().max(500).optional().or(z.literal("")),
-});
-
-type OrderFormData = z.infer<typeof orderSchema>;
+import CheckoutForm from "@/components/checkout/CheckoutForm";
 
 const CartDrawer = () => {
-  const { items, isCartOpen, setIsCartOpen, updateQuantity, removeFromCart, getTotalPrice, clearCart } = useCart();
-  const { toast } = useToast();
-  
+  const { items, isCartOpen, setIsCartOpen, updateQuantity, removeFromCart, getTotalPrice } = useCart();
+
   const [isOrderMode, setIsOrderMode] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [orderComplete, setOrderComplete] = useState(false);
-  const [formData, setFormData] = useState<OrderFormData>({
-    name: "",
-    phone: "",
-    email: "",
-    inn: "",
-    city: "",
-    address: "",
-    deliveryType: undefined,
-    comment: "",
-  });
-  const [errors, setErrors] = useState<Partial<Record<keyof OrderFormData, string>>>({});
-
-  const handleInputChange = (field: keyof OrderFormData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-    if (errors[field]) {
-      setErrors((prev) => ({ ...prev, [field]: undefined }));
-    }
-  };
-
-  const setDeliveryType = (type: "pickup" | "delivery") => {
-    setFormData((prev) => ({ 
-      ...prev, 
-      deliveryType: prev.deliveryType === type ? undefined : type 
-    }));
-  };
-
-  const validateForm = (): boolean => {
-    try {
-      orderSchema.parse(formData);
-      setErrors({});
-      return true;
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        const newErrors: Partial<Record<keyof OrderFormData, string>> = {};
-        error.errors.forEach((err) => {
-          if (err.path[0]) {
-            newErrors[err.path[0] as keyof OrderFormData] = err.message;
-          }
-        });
-        setErrors(newErrors);
-      }
-      return false;
-    }
-  };
-
-  const handleSubmitOrder = async () => {
-    if (!validateForm()) return;
-    
-    setIsSubmitting(true);
-    
-    const orderData = {
-      name: formData.name,
-      phone: formData.phone,
-      email: formData.email,
-      inn: formData.inn || undefined,
-      city: formData.city || undefined,
-      address: formData.address || undefined,
-      deliveryType: formData.deliveryType,
-      comment: formData.comment || undefined,
-      items: items.map((item) => ({
-        name: item.product.name,
-        volume: item.product.volume,
-        quantity: item.quantity,
-        price: item.product.price,
-      })),
-      totalPrice: getTotalPrice(),
-    };
-
-    const success = await sendTelegramNotification(orderData);
-    
-    setIsSubmitting(false);
-    
-    if (success) {
-      setOrderComplete(true);
-      
-      toast({
-        title: "Заказ оформлен!",
-        description: "Мы свяжемся с вами в ближайшее время для подтверждения",
-      });
-      
-      // Reset after showing success
-      setTimeout(() => {
-        clearCart();
-        setOrderComplete(false);
-        setIsOrderMode(false);
-        setIsCartOpen(false);
-        setFormData({ name: "", phone: "", email: "", inn: "", city: "", address: "", deliveryType: undefined, comment: "" });
-      }, 2000);
-    } else {
-      toast({
-        title: "Ошибка отправки",
-        description: "Не удалось отправить заказ. Попробуйте позже.",
-        variant: "destructive",
-      });
-    }
-  };
 
   const handleClose = () => {
     setIsCartOpen(false);
     setIsOrderMode(false);
     setOrderComplete(false);
-    setErrors({});
   };
 
   return (
     <Sheet open={isCartOpen} onOpenChange={handleClose}>
       <SheetContent className="w-full sm:max-w-lg flex flex-col p-0">
-        <SheetHeader className="p-6 pb-0">
-          <SheetTitle className="text-xl">
-            {orderComplete ? "Заказ оформлен" : isOrderMode ? "Оформление заказа" : "Корзина"}
-          </SheetTitle>
-        </SheetHeader>
-
         {orderComplete ? (
-          <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">
-            <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mb-4">
-              <CheckCircle className="h-10 w-10 text-green-600" />
-            </div>
-            <h3 className="text-xl font-semibold mb-2">Спасибо за заказ!</h3>
-            <p className="text-muted-foreground">
-              Мы свяжемся с вами в ближайшее время для подтверждения
-            </p>
-          </div>
-        ) : items.length === 0 ? (
-          <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">
-            <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center mb-4">
-              <ShoppingBag className="h-10 w-10 text-muted-foreground" />
-            </div>
-            <h3 className="text-lg font-medium mb-2">Корзина пуста</h3>
-            <p className="text-muted-foreground text-sm mb-4">
-              Добавьте товары для оформления заказа
-            </p>
-            <Button onClick={() => setIsCartOpen(false)}>
-              Перейти к каталогу
-            </Button>
-          </div>
-        ) : isOrderMode ? (
           <>
-            <div className="flex-1 overflow-y-auto p-6">
-              {/* Order Summary */}
-              <div className="bg-muted rounded-xl p-4 mb-6">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm text-muted-foreground">Товаров: {items.length}</span>
-                  <button 
-                    className="text-sm text-primary hover:underline"
-                    onClick={() => setIsOrderMode(false)}
-                  >
-                    Изменить
-                  </button>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="font-medium">Итого:</span>
-                  <span className="text-xl font-bold text-primary">
-                    {getTotalPrice().toLocaleString()} ₽
-                  </span>
-                </div>
+            <SheetHeader className="p-6 pb-0">
+              <SheetTitle className="text-xl">Заказ оформлен</SheetTitle>
+            </SheetHeader>
+            <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">
+              <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mb-4">
+                <CheckCircle className="h-10 w-10 text-green-600" />
               </div>
-
-              {/* Contact Form */}
-              <div className="space-y-4">
-                {/* Required fields */}
-                <div>
-                  <label className="text-sm font-medium mb-1.5 block">
-                    Имя <span className="text-destructive">*</span>
-                  </label>
-                  <Input
-                    placeholder="Ваше имя"
-                    value={formData.name}
-                    onChange={(e) => handleInputChange("name", e.target.value)}
-                    className={errors.name ? "border-destructive" : ""}
-                  />
-                  {errors.name && (
-                    <p className="text-xs text-destructive mt-1">{errors.name}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label className="text-sm font-medium mb-1.5 block">
-                    Телефон <span className="text-destructive">*</span>
-                  </label>
-                  <Input
-                    type="tel"
-                    placeholder="+7 (999) 123-45-67"
-                    value={formData.phone}
-                    onChange={(e) => handleInputChange("phone", e.target.value)}
-                    className={errors.phone ? "border-destructive" : ""}
-                  />
-                  {errors.phone && (
-                    <p className="text-xs text-destructive mt-1">{errors.phone}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label className="text-sm font-medium mb-1.5 block">
-                    Email <span className="text-destructive">*</span>
-                  </label>
-                  <Input
-                    type="email"
-                    placeholder="email@example.com"
-                    value={formData.email}
-                    onChange={(e) => handleInputChange("email", e.target.value)}
-                    className={errors.email ? "border-destructive" : ""}
-                  />
-                  {errors.email && (
-                    <p className="text-xs text-destructive mt-1">{errors.email}</p>
-                  )}
-                </div>
-
-                {/* Optional fields */}
-                <div>
-                  <label className="text-sm font-medium mb-1.5 block">ИНН</label>
-                  <Input
-                    placeholder="1234567890"
-                    value={formData.inn}
-                    onChange={(e) => handleInputChange("inn", e.target.value)}
-                    maxLength={12}
-                  />
-                </div>
-
-                <div>
-                  <label className="text-sm font-medium mb-1.5 block">Город</label>
-                  <Input
-                    placeholder="Москва"
-                    value={formData.city}
-                    onChange={(e) => handleInputChange("city", e.target.value)}
-                  />
-                </div>
-
-                <div>
-                  <label className="text-sm font-medium mb-1.5 block">Адрес доставки</label>
-                  <Input
-                    placeholder="ул. Примерная, д. 1"
-                    value={formData.address}
-                    onChange={(e) => handleInputChange("address", e.target.value)}
-                  />
-                </div>
-
-                {/* Delivery type */}
-                <div>
-                  <label className="text-sm font-medium mb-2 block">Способ получения</label>
-                  <div className="flex gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setDeliveryType("pickup")}
-                      className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
-                        formData.deliveryType === "pickup"
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-muted text-muted-foreground hover:bg-muted-foreground/20"
-                      }`}
-                    >
-                      <MapPin className="h-4 w-4" />
-                      Самовывоз
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setDeliveryType("delivery")}
-                      className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
-                        formData.deliveryType === "delivery"
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-muted text-muted-foreground hover:bg-muted-foreground/20"
-                      }`}
-                    >
-                      <Truck className="h-4 w-4" />
-                      Доставка
-                    </button>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="text-sm font-medium mb-1.5 block">Комментарий к заказу</label>
-                  <Textarea
-                    placeholder="Дополнительная информация к заказу..."
-                    value={formData.comment}
-                    onChange={(e) => handleInputChange("comment", e.target.value)}
-                    className="resize-none"
-                    rows={3}
-                  />
-                </div>
-              </div>
+              <h3 className="text-xl font-semibold mb-2">Спасибо за заказ!</h3>
+              <p className="text-muted-foreground">
+                Мы свяжемся с вами в ближайшее время для подтверждения
+              </p>
             </div>
-
-            {/* Submit Button */}
-            <div className="p-6 border-t border-border">
-              <Button
-                className="w-full h-12 gradient-primary hover:gradient-primary-hover text-primary-foreground font-semibold rounded-full"
-                onClick={handleSubmitOrder}
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? "Отправляем..." : "Запросить счёт на оплату"}
+          </>
+        ) : items.length === 0 ? (
+          <>
+            <SheetHeader className="p-6 pb-0">
+              <SheetTitle className="text-xl">Корзина</SheetTitle>
+            </SheetHeader>
+            <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">
+              <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center mb-4">
+                <ShoppingBag className="h-10 w-10 text-muted-foreground" />
+              </div>
+              <h3 className="text-lg font-medium mb-2">Корзина пуста</h3>
+              <p className="text-muted-foreground text-sm mb-4">
+                Добавьте товары для оформления заказа
+              </p>
+              <Button onClick={() => setIsCartOpen(false)}>
+                Перейти к каталогу
               </Button>
             </div>
           </>
+        ) : isOrderMode ? (
+          <CheckoutForm
+            onBack={() => setIsOrderMode(false)}
+            onComplete={() => {
+              setOrderComplete(true);
+              setTimeout(() => {
+                setOrderComplete(false);
+                setIsOrderMode(false);
+                setIsCartOpen(false);
+              }, 2000);
+            }}
+          />
         ) : (
           <>
+            <SheetHeader className="p-6 pb-0">
+              <SheetTitle className="text-xl">Корзина</SheetTitle>
+            </SheetHeader>
             {/* Cart Items */}
             <div className="flex-1 overflow-y-auto p-6">
               <div className="space-y-4">
@@ -371,7 +118,7 @@ const CartDrawer = () => {
                       </div>
                     </div>
                     <div className="text-right shrink-0">
-                      <p className="font-bold text-primary">
+                      <p className="font-bold text-foreground">
                         {(item.product.price * item.quantity).toLocaleString()} ₽
                       </p>
                       {item.quantity > 1 && (
@@ -389,7 +136,7 @@ const CartDrawer = () => {
             <div className="p-6 border-t border-border">
               <div className="flex justify-between items-center mb-4">
                 <span className="text-muted-foreground">Итого:</span>
-                <span className="text-2xl font-bold text-primary">
+                <span className="text-2xl font-bold text-foreground">
                   {getTotalPrice().toLocaleString()} ₽
                 </span>
               </div>
