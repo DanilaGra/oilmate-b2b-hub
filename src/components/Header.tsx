@@ -108,16 +108,30 @@ const Header = () => {
         {/* Top navigation - hidden on mobile */}
         <div className="hidden md:block">
           <div className="container">
-            <nav className="flex items-center gap-6 py-2 text-sm">
-              {["Новости", "Акции", "Оптовикам", "Доставка", "О компании", "Контакты"].map((item) => (
-                <a
-                  key={item}
-                  href="#"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {item}
-                </a>
-              ))}
+            <nav className="flex items-center justify-between py-2 text-sm">
+              <div className="flex items-center gap-6">
+                {["Новости", "Акции", "Оптовикам", "Доставка", "О компании", "Контакты"].map((item) => (
+                  <a
+                    key={item}
+                    href="#"
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {item}
+                  </a>
+                ))}
+              </div>
+              <div className="flex items-center gap-1.5 text-muted-foreground">
+                <MapPin className="h-3.5 w-3.5 text-primary" />
+                <Select value={selectedCity} onValueChange={setSelectedCity}>
+                  <SelectTrigger className="h-auto border-0 bg-transparent p-0 text-sm font-medium text-foreground shadow-none focus:ring-0 focus:ring-offset-0 gap-1 w-auto">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="vladivostok">Владивосток</SelectItem>
+                    <SelectItem value="other">Другой город</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </nav>
           </div>
         </div>
