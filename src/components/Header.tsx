@@ -119,36 +119,32 @@ const Header = () => {
                   </a>
                 ))}
               </div>
-              <div className="flex items-center gap-1.5 text-muted-foreground">
+              <button
+                className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors"
+                onClick={() => setIsCityOpen(true)}
+              >
                 <MapPin className="h-3.5 w-3.5 text-primary" />
-                <Select value={selectedCity} onValueChange={setSelectedCity}>
-                  <SelectTrigger className="h-auto border-0 bg-transparent p-0 text-sm font-medium text-foreground shadow-none focus:ring-0 focus:ring-offset-0 gap-1 w-auto">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="vladivostok">Владивосток</SelectItem>
-                    <SelectItem value="other">Другой город</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+                <span className="text-sm font-medium text-foreground">
+                  {cities.find(c => c.id === selectedCity)?.name}
+                </span>
+                <ChevronDown className="h-3.5 w-3.5" />
+              </button>
             </nav>
           </div>
         </div>
 
         {/* Mobile city selector */}
         <div className="md:hidden container pt-2 pb-0">
-          <div className="flex items-center gap-1 text-sm">
+          <button
+            className="flex items-center gap-1 text-sm"
+            onClick={() => setIsCityOpen(true)}
+          >
             <MapPin className="h-3.5 w-3.5 text-primary shrink-0" />
-            <Select value={selectedCity} onValueChange={setSelectedCity}>
-              <SelectTrigger className="h-auto border-0 bg-transparent p-0 text-sm font-medium text-foreground shadow-none focus:ring-0 focus:ring-offset-0 gap-1 w-auto">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="vladivostok">Владивосток</SelectItem>
-                <SelectItem value="other">Другой город</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+            <span className="font-medium text-foreground">
+              {cities.find(c => c.id === selectedCity)?.name}
+            </span>
+            <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
+          </button>
         </div>
 
         {/* Main header */}
