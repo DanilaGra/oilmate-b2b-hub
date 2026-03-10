@@ -474,7 +474,7 @@ const Header = () => {
                     </span>
                     <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
                       <Truck className="h-3 w-3" />
-                      Доставка по Приморскому краю
+                      Доставка по городу и Приморскому краю
                     </span>
                     <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
                       <Truck className="h-3 w-3" />
