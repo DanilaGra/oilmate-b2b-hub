@@ -64,7 +64,7 @@ const businessDeliveryOptions: DeliveryOption[] = [
     details: [
       { icon: <MapPin className="h-3.5 w-3.5" />, text: "Некрасовская 69 стр 1" },
       { icon: <Clock className="h-3.5 w-3.5" />, text: "Пн–Пт: 10:00–18:00 · Сб, Вс — выходной" },
-      { icon: <CalendarCheck className="h-3.5 w-3.5" />, text: "Заказ будет доставлен завтра", highlight: true },
+      { text: "Заказ будет доставлен завтра", highlight: true },
     ],
   },
   {
