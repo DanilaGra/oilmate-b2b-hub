@@ -283,8 +283,8 @@ const Header = () => {
 
       {/* Sticky mobile search on scroll */}
       <div className={cn(
-        "fixed top-0 left-0 right-0 z-40 md:hidden bg-card/95 backdrop-blur-lg px-3 py-2 transition-all duration-300",
-        isScrolled ? "translate-y-0 opacity-100 shadow-md" : "-translate-y-full opacity-0 pointer-events-none"
+        "fixed top-0 left-0 right-0 z-40 md:hidden bg-card/95 backdrop-blur-lg px-3 py-2 rounded-b-2xl transition-all duration-300",
+        isScrolled ? "translate-y-0 opacity-100 shadow-[0_2px_20px_rgba(0,0,0,0.06)]" : "-translate-y-full opacity-0 pointer-events-none"
       )}>
         <form onSubmit={handleSearchSubmit} className="relative">
           <Input
