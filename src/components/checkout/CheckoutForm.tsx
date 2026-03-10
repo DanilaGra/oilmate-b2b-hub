@@ -382,7 +382,14 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
                               {selectedTC === tc.id && <div className="w-1.5 h-1.5 rounded-full bg-accent" />}
                             </div>
                             <div className="flex-1 min-w-0">
-                              <div className="text-xs font-medium text-foreground">{tc.name}</div>
+                              <div className="flex items-center gap-2">
+                                <span className="text-xs font-medium text-foreground">{tc.name}</span>
+                                {tc.badge && (
+                                  <span className="text-[10px] font-semibold text-green-700 bg-green-100 border border-green-300 rounded-full px-2 py-0.5 leading-none">
+                                    {tc.badge}
+                                  </span>
+                                )}
+                              </div>
                               <div className="text-[11px] text-muted-foreground mt-0.5">{tc.description}</div>
                               <a
                                 href={tc.calcUrl}
