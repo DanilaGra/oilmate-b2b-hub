@@ -47,7 +47,7 @@ const individualDeliveryOptions: DeliveryOption[] = [
     title: "ПВЗ «Вмасле»",
     subtitle: "Самовывоз",
     details: [
-      { icon: <MapPin className="h-3.5 w-3.5" />, text: "Некрасовская 69 стр 1" },
+      { icon: <MapPin className="h-3.5 w-3.5" />, text: "г. Владивосток, Некрасовская 69 стр 1" },
       { icon: <Clock className="h-3.5 w-3.5" />, text: "Пн–Пт: 10:00–18:00 · Сб, Вс — выходной" },
       { text: "Заказ будет доставлен завтра", highlight: true },
     ],
