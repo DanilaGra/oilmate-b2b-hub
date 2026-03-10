@@ -445,39 +445,68 @@ const Header = () => {
                 <X className="h-5 w-5" />
               </Button>
             </div>
-            <div className="p-3">
-              {cities.map((city) => (
-                <button
-                  key={city.id}
-                  className={cn(
-                    "w-full flex items-center gap-4 p-4 rounded-xl transition-colors text-left",
-                    selectedCity === city.id
-                      ? "bg-primary/10 text-primary"
-                      : "hover:bg-muted text-foreground"
-                  )}
-                  onClick={() => {
-                    setSelectedCity(city.id);
-                    setIsCityOpen(false);
-                  }}
-                >
-                  <div className="flex-1">
-                    <MapPin className={cn(
-                      "h-5 w-5 shrink-0 inline-block mr-3 align-middle",
-                      selectedCity === city.id ? "text-primary" : "text-muted-foreground"
-                    )} />
-                    <span className="font-medium align-middle">{city.name}</span>
-                    <p className={cn(
-                      "text-xs mt-1 ml-8",
-                      selectedCity === city.id ? "text-primary/70" : "text-muted-foreground"
-                    )}>
-                      {city.description}
-                    </p>
+            <div className="p-3 space-y-2">
+              {/* Владивосток */}
+              <button
+                className={cn(
+                  "w-full flex items-center gap-4 p-4 rounded-xl transition-colors text-left",
+                  selectedCity === "vladivostok"
+                    ? "bg-primary/10"
+                    : "hover:bg-muted"
+                )}
+                onClick={() => { setSelectedCity("vladivostok"); setIsCityOpen(false); }}
+              >
+                <div className={cn(
+                  "w-10 h-10 rounded-xl flex items-center justify-center shrink-0",
+                  selectedCity === "vladivostok" ? "bg-primary/20" : "bg-muted"
+                )}>
+                  <MapPin className={cn("h-5 w-5", selectedCity === "vladivostok" ? "text-primary" : "text-muted-foreground")} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className={cn("font-semibold", selectedCity === "vladivostok" ? "text-primary" : "text-foreground")}>Владивосток</span>
+                    {selectedCity === "vladivostok" && <Check className="h-4 w-4 text-primary" />}
                   </div>
-                  {selectedCity === city.id && (
-                    <Check className="h-5 w-5 text-primary shrink-0" />
-                  )}
-                </button>
-              ))}
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5">
+                    <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+                      <Package className="h-3 w-3" />
+                      Пункт выдачи
+                    </span>
+                    <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+                      <Truck className="h-3 w-3" />
+                      Доставка по Приморскому краю
+                    </span>
+                  </div>
+                </div>
+              </button>
+
+              {/* Другой город */}
+              <button
+                className={cn(
+                  "w-full flex items-center gap-4 p-4 rounded-xl transition-colors text-left",
+                  selectedCity === "other"
+                    ? "bg-primary/10"
+                    : "hover:bg-muted"
+                )}
+                onClick={() => { setSelectedCity("other"); setIsCityOpen(false); }}
+              >
+                <div className={cn(
+                  "w-10 h-10 rounded-xl flex items-center justify-center shrink-0",
+                  selectedCity === "other" ? "bg-primary/20" : "bg-muted"
+                )}>
+                  <MapPin className={cn("h-5 w-5", selectedCity === "other" ? "text-primary" : "text-muted-foreground")} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className={cn("font-semibold", selectedCity === "other" ? "text-primary" : "text-foreground")}>Другой город</span>
+                    {selectedCity === "other" && <Check className="h-4 w-4 text-primary" />}
+                  </div>
+                  <span className="inline-flex items-center gap-1 text-xs text-muted-foreground mt-1.5">
+                    <Truck className="h-3 w-3" />
+                    Доставка через транспортную компанию
+                  </span>
+                </div>
+              </button>
             </div>
           </div>
         </div>
