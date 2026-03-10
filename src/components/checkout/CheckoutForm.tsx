@@ -16,7 +16,7 @@ interface TransportCompany {
 }
 
 const transportCompanies: TransportCompany[] = [
-  { id: "kit", name: "ТК Кит", description: "Заказ до 12 кг не более 500 ₽", calcUrl: "https://tkkit.ru/calculator", badge: "Самый бюджетный вариант" },
+  { id: "kit", name: "ТК Кит", description: "Доставка заказа не более 12 кг — 550 ₽ по большинству направлений РФ", calcUrl: "https://tkkit.ru/calculator", badge: "Самый бюджетный вариант" },
   { id: "cdek", name: "СДЭК", description: "Экспресс-доставка по всей России", calcUrl: "https://www.cdek.ru/ru/calculator" },
   { id: "dellin", name: "Деловые Линии", description: "Надёжная доставка для крупных грузов", calcUrl: "https://www.dellin.ru/calculator/" },
   { id: "troika", name: "Тройка ДВ", description: "Доставка по Дальнему Востоку", calcUrl: "https://troikadv.ru" },
