@@ -301,6 +301,12 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
                   </button>
                 ))}
               </div>
+              {deliveryType === "pickup" && (
+                <div className="flex items-center gap-2 mt-3 px-1 text-xs text-muted-foreground">
+                  <Clock className="h-3.5 w-3.5 shrink-0" />
+                  <span>Пн–Пт: 10:00–18:00 · Сб, Вс — выходной</span>
+                </div>
+              )}
             </div>
 
             {/* Contact fields */}
