@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 import { useToast } from "@/hooks/use-toast";
 import { sendTelegramNotification } from "@/lib/telegram";
-import { MapPin, Truck, Package, Building2, User, ChevronLeft, Clock } from "lucide-react";
+import { MapPin, Truck, Package, Building2, User, ChevronLeft } from "lucide-react";
 
 type CustomerType = "individual" | "business";
 type DeliveryType = "pickup" | "city" | "shipping";
@@ -22,7 +22,7 @@ const individualDeliveryOptions: DeliveryOption[] = [
     id: "pickup",
     icon: <MapPin className="h-5 w-5" />,
     title: "ПВЗ «Вмасле»",
-    subtitle: "Некрасовская 69 стр 1 · товар будет доставлен завтра",
+    subtitle: "Некрасовская 69 стр 1 · товар будет доставлен завтра\nПн–Пт: 10:00–18:00 · Сб, Вс — выходной",
   },
   {
     id: "city",
@@ -43,7 +43,7 @@ const businessDeliveryOptions: DeliveryOption[] = [
     id: "pickup",
     icon: <MapPin className="h-5 w-5" />,
     title: "ПВЗ «Вмасле»",
-    subtitle: "Некрасовская 69 стр 1",
+    subtitle: "Некрасовская 69 стр 1\nПн–Пт: 10:00–18:00 · Сб, Вс — выходной",
   },
   {
     id: "city",
@@ -289,7 +289,9 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
                     </div>
                     <div className="min-w-0">
                       <div className="text-sm font-medium text-foreground">{opt.title}</div>
-                      <div className="text-xs text-muted-foreground">{opt.subtitle}</div>
+                      {opt.subtitle.split("\n").map((line, i) => (
+                        <div key={i} className="text-xs text-muted-foreground">{line}</div>
+                      ))}
                     </div>
                     <div className={`ml-auto w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
                       deliveryType === opt.id ? "border-primary" : "border-muted-foreground/30"
@@ -301,12 +303,6 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
                   </button>
                 ))}
               </div>
-              {deliveryType === "pickup" && (
-                <div className="flex items-center gap-2 mt-3 px-1 text-xs text-muted-foreground">
-                  <Clock className="h-3.5 w-3.5 shrink-0" />
-                  <span>Пн–Пт: 10:00–18:00 · Сб, Вс — выходной</span>
-                </div>
-              )}
             </div>
 
             {/* Contact fields */}
