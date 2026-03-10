@@ -226,11 +226,11 @@ const Product = () => {
                 {product.name}
               </h1>
 
-              {/* Parameters */}
-              <p className="text-sm text-muted-foreground mb-4 md:mb-6">
-                {product.volume} · {product.oilType} · {product.brand}
-                {product.isUniversal && " · Универсальное"}
-              </p>
+              {/* Stock info */}
+              <div className="flex items-center gap-1.5 text-sm text-green-600 mb-4 md:mb-6">
+                <Check className="h-4 w-4" />
+                <span className="font-medium">В наличии — 12 шт.</span>
+              </div>
 
               {/* Price */}
               <div className="mb-4 md:mb-6">
