@@ -1,4 +1,4 @@
-import { Search, ShoppingCart, Menu, X, ChevronRight, Droplet, Cog, Gauge, Factory, Snowflake, Wrench, MapPin } from "lucide-react";
+import { Search, ShoppingCart, Menu, X, ChevronRight, Droplet, Cog, Gauge, Factory, Snowflake, Wrench, MapPin, ChevronDown, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState, useRef, useEffect } from "react";
@@ -6,13 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { searchProducts, categoryNames } from "@/data/products";
 import { useCart } from "@/contexts/CartContext";
 import { cn } from "@/lib/utils";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
+const cities = [
+  { id: "vladivostok", name: "Владивосток" },
+  { id: "other", name: "Другой город" },
+];
 
 const catalogCategories = [
   { id: "motor", name: "Моторные масла", icon: Droplet },
@@ -32,6 +30,7 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [selectedCity, setSelectedCity] = useState("vladivostok");
+  const [isCityOpen, setIsCityOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
   const catalogRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
@@ -120,36 +119,32 @@ const Header = () => {
                   </a>
                 ))}
               </div>
-              <div className="flex items-center gap-1.5 text-muted-foreground">
+              <button
+                className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors"
+                onClick={() => setIsCityOpen(true)}
+              >
                 <MapPin className="h-3.5 w-3.5 text-primary" />
-                <Select value={selectedCity} onValueChange={setSelectedCity}>
-                  <SelectTrigger className="h-auto border-0 bg-transparent p-0 text-sm font-medium text-foreground shadow-none focus:ring-0 focus:ring-offset-0 gap-1 w-auto">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="vladivostok">Владивосток</SelectItem>
-                    <SelectItem value="other">Другой город</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+                <span className="text-sm font-medium text-foreground">
+                  {cities.find(c => c.id === selectedCity)?.name}
+                </span>
+                <ChevronDown className="h-3.5 w-3.5" />
+              </button>
             </nav>
           </div>
         </div>
 
         {/* Mobile city selector */}
         <div className="md:hidden container pt-2 pb-0">
-          <div className="flex items-center gap-1 text-sm">
+          <button
+            className="flex items-center gap-1 text-sm"
+            onClick={() => setIsCityOpen(true)}
+          >
             <MapPin className="h-3.5 w-3.5 text-primary shrink-0" />
-            <Select value={selectedCity} onValueChange={setSelectedCity}>
-              <SelectTrigger className="h-auto border-0 bg-transparent p-0 text-sm font-medium text-foreground shadow-none focus:ring-0 focus:ring-offset-0 gap-1 w-auto">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="vladivostok">Владивосток</SelectItem>
-                <SelectItem value="other">Другой город</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+            <span className="font-medium text-foreground">
+              {cities.find(c => c.id === selectedCity)?.name}
+            </span>
+            <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
+          </button>
         </div>
 
         {/* Main header */}
@@ -426,6 +421,55 @@ const Header = () => {
                   </a>
                 ))}
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* City Selection Modal */}
+      {isCityOpen && (
+        <div className="fixed inset-0 z-50">
+          <div 
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setIsCityOpen(false)}
+          />
+          <div className="absolute inset-x-0 bottom-0 md:bottom-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:max-w-md md:rounded-2xl bg-card rounded-t-2xl md:rounded-2xl overflow-hidden animate-in slide-in-from-bottom md:slide-in-from-bottom-0 md:fade-in duration-300">
+            <div className="flex items-center justify-between p-5 border-b border-border">
+              <h2 className="text-lg font-semibold">Выберите город</h2>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="rounded-full"
+                onClick={() => setIsCityOpen(false)}
+              >
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+            <div className="p-3">
+              {cities.map((city) => (
+                <button
+                  key={city.id}
+                  className={cn(
+                    "w-full flex items-center gap-4 p-4 rounded-xl transition-colors text-left",
+                    selectedCity === city.id
+                      ? "bg-primary/10 text-primary"
+                      : "hover:bg-muted text-foreground"
+                  )}
+                  onClick={() => {
+                    setSelectedCity(city.id);
+                    setIsCityOpen(false);
+                  }}
+                >
+                  <MapPin className={cn(
+                    "h-5 w-5 shrink-0",
+                    selectedCity === city.id ? "text-primary" : "text-muted-foreground"
+                  )} />
+                  <span className="font-medium flex-1">{city.name}</span>
+                  {selectedCity === city.id && (
+                    <Check className="h-5 w-5 text-primary shrink-0" />
+                  )}
+                </button>
+              ))}
             </div>
           </div>
         </div>
