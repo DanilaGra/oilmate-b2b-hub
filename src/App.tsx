@@ -22,6 +22,7 @@ const App = () => (
         <Sonner />
         <CartDrawer />
         <CookieConsent />
+        <BottomNav />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
