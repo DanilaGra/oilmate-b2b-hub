@@ -294,12 +294,12 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
                     onClick={() => setDeliveryType(opt.id)}
                     className={`w-full flex items-center gap-3 p-3.5 rounded-xl border transition-all text-left ${
                       deliveryType === opt.id
-                        ? "border-primary bg-primary/5 ring-1 ring-primary"
+                        ? "border-accent bg-accent/5 ring-1 ring-accent"
                         : "border-border hover:border-muted-foreground/30"
                     }`}
                   >
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
-                      deliveryType === opt.id ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-all ${
+                      deliveryType === opt.id ? "bg-gradient-to-br from-accent to-blue-400 text-accent-foreground" : "bg-muted text-muted-foreground"
                     }`}>
                       {opt.icon}
                     </div>
