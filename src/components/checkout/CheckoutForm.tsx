@@ -14,6 +14,7 @@ interface DeliveryDetail {
   icon: React.ReactNode;
   text: string;
   highlight?: boolean;
+  variant?: "default" | "success";
 }
 
 interface DeliveryOption {
