@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 import { useToast } from "@/hooks/use-toast";
 import { sendTelegramNotification } from "@/lib/telegram";
-import { MapPin, Truck, Package, Building2, User, ChevronLeft } from "lucide-react";
+import { MapPin, Truck, Package, Building2, User, ChevronLeft, Clock } from "lucide-react";
 
 type CustomerType = "individual" | "business";
 type DeliveryType = "pickup" | "city" | "shipping";
@@ -21,8 +21,8 @@ const individualDeliveryOptions: DeliveryOption[] = [
   {
     id: "pickup",
     icon: <MapPin className="h-5 w-5" />,
-    title: "Пункт выдачи",
-    subtitle: "Некрасовская 69 стр 1 · завтра",
+    title: "ПВЗ «Вмасле»",
+    subtitle: "Некрасовская 69 стр 1 · товар будет доставлен завтра",
   },
   {
     id: "city",
@@ -33,7 +33,7 @@ const individualDeliveryOptions: DeliveryOption[] = [
   {
     id: "shipping",
     icon: <Package className="h-5 w-5" />,
-    title: "Транспортная компания",
+    title: "Транспортной компанией",
     subtitle: "Отправка по России",
   },
 ];
@@ -42,7 +42,7 @@ const businessDeliveryOptions: DeliveryOption[] = [
   {
     id: "pickup",
     icon: <MapPin className="h-5 w-5" />,
-    title: "Самовывоз с ПВЗ",
+    title: "ПВЗ «Вмасле»",
     subtitle: "Некрасовская 69 стр 1",
   },
   {
@@ -301,6 +301,12 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
                   </button>
                 ))}
               </div>
+              {deliveryType === "pickup" && (
+                <div className="flex items-center gap-2 mt-3 px-1 text-xs text-muted-foreground">
+                  <Clock className="h-3.5 w-3.5 shrink-0" />
+                  <span>Пн–Пт: 10:00–18:00 · Сб, Вс — выходной</span>
+                </div>
+              )}
             </div>
 
             {/* Contact fields */}
@@ -362,7 +368,7 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
               onClick={handleSubmit}
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Отправляем..." : "Запросить счёт на оплату"}
+              {isSubmitting ? "Отправляем..." : customerType === "individual" ? "Оплатить заказ" : "Запросить счёт на оплату"}
             </Button>
           </div>
         </>
