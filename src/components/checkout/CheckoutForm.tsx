@@ -362,7 +362,7 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
               onClick={handleSubmit}
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Отправляем..." : "Запросить счёт на оплату"}
+              {isSubmitting ? "Отправляем..." : customerType === "individual" ? "Оплатить заказ" : "Запросить счёт на оплату"}
             </Button>
           </div>
         </>
