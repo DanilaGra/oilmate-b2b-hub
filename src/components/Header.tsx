@@ -1,4 +1,4 @@
-import { Search, ShoppingCart, Menu, X, ChevronRight, Droplet, Cog, Gauge, Factory, Snowflake, Wrench, MapPin } from "lucide-react";
+import { Search, ShoppingCart, Menu, X, ChevronRight, Droplet, Cog, Gauge, Factory, Snowflake, Wrench, MapPin, ChevronDown, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState, useRef, useEffect } from "react";
@@ -6,13 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { searchProducts, categoryNames } from "@/data/products";
 import { useCart } from "@/contexts/CartContext";
 import { cn } from "@/lib/utils";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
+const cities = [
+  { id: "vladivostok", name: "Владивосток" },
+  { id: "other", name: "Другой город" },
+];
 
 const catalogCategories = [
   { id: "motor", name: "Моторные масла", icon: Droplet },
