@@ -10,6 +10,7 @@ import Product from "./pages/Product";
 import NotFound from "./pages/NotFound";
 import CartDrawer from "./components/CartDrawer";
 import CookieConsent from "./components/CookieConsent";
+import BottomNav from "./components/BottomNav";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
         <Sonner />
         <CartDrawer />
         <CookieConsent />
+        <BottomNav />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
