@@ -104,6 +104,7 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
   const [bizCity, setBizCity] = useState("");
 
   const [comment, setComment] = useState("");
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const deliveryOptions = customerType === "individual" ? individualDeliveryOptions : businessDeliveryOptions;
