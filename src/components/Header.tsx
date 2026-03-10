@@ -23,6 +23,7 @@ const Header = () => {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
   const catalogRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
@@ -30,6 +31,15 @@ const Header = () => {
   const cartCount = getTotalItems();
   const searchResults = searchProducts(searchQuery);
   const showResults = isSearchFocused && searchQuery.trim().length > 0;
+
+  // Track scroll for sticky mobile search
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 80);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Close dropdowns when clicking outside
   useEffect(() => {
