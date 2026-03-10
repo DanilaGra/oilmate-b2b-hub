@@ -11,7 +11,7 @@ type CustomerType = "individual" | "business";
 type DeliveryType = "pickup" | "city" | "shipping";
 
 interface DeliveryDetail {
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   text: string;
   highlight?: boolean;
   variant?: "default" | "success";
@@ -34,7 +34,7 @@ const individualDeliveryOptions: DeliveryOption[] = [
     details: [
       { icon: <MapPin className="h-3.5 w-3.5" />, text: "Некрасовская 69 стр 1" },
       { icon: <Clock className="h-3.5 w-3.5" />, text: "Пн–Пт: 10:00–18:00 · Сб, Вс — выходной" },
-      { icon: <CalendarCheck className="h-3.5 w-3.5" />, text: "Заказ будет доставлен завтра", highlight: true },
+      { text: "Заказ будет доставлен завтра", highlight: true },
     ],
   },
   {
@@ -43,7 +43,7 @@ const individualDeliveryOptions: DeliveryOption[] = [
     title: "Доставка по городу",
     subtitle: "По вашему адресу",
     details: [
-      { icon: <CalendarCheck className="h-3.5 w-3.5" />, text: "Заказ будет доставлен завтра", highlight: true },
+      { text: "Заказ будет доставлен завтра", highlight: true },
       { icon: <CircleCheck className="h-3.5 w-3.5" />, text: "Бесплатная доставка", variant: "success" },
     ],
   },
@@ -64,7 +64,7 @@ const businessDeliveryOptions: DeliveryOption[] = [
     details: [
       { icon: <MapPin className="h-3.5 w-3.5" />, text: "Некрасовская 69 стр 1" },
       { icon: <Clock className="h-3.5 w-3.5" />, text: "Пн–Пт: 10:00–18:00 · Сб, Вс — выходной" },
-      { icon: <CalendarCheck className="h-3.5 w-3.5" />, text: "Заказ будет доставлен завтра", highlight: true },
+      { text: "Заказ будет доставлен завтра", highlight: true },
     ],
   },
   {
@@ -73,7 +73,7 @@ const businessDeliveryOptions: DeliveryOption[] = [
     title: "Доставка по городу",
     subtitle: "По адресу вашей компании",
     details: [
-      { icon: <CalendarCheck className="h-3.5 w-3.5" />, text: "Заказ будет доставлен завтра", highlight: true },
+      { text: "Заказ будет доставлен завтра", highlight: true },
       { icon: <CircleCheck className="h-3.5 w-3.5" />, text: "Бесплатная доставка", variant: "success" },
     ],
   },
@@ -323,9 +323,9 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
                         <div className="mt-2.5 space-y-1.5 pt-2.5 border-t border-border/50">
                           {opt.details.map((detail, i) => (
                             <div key={i} className={`flex items-center gap-2 text-xs ${
-                              detail.variant === "success" ? "text-green-600 font-medium" : detail.highlight ? "text-accent font-medium" : "text-muted-foreground"
+                              detail.variant === "success" ? "text-green-600 font-medium" : detail.highlight ? "text-accent font-semibold" : "text-muted-foreground"
                             }`}>
-                              <span className="shrink-0">{detail.icon}</span>
+                              {detail.icon && <span className="shrink-0">{detail.icon}</span>}
                               <span>{detail.text}</span>
                             </div>
                           ))}
