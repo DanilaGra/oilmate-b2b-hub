@@ -1,27 +1,10 @@
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { useCart } from "@/contexts/CartContext";
-import { Minus, Plus, Trash2, ShoppingBag, CheckCircle, Truck, MapPin } from "lucide-react";
+import { Minus, Plus, Trash2, ShoppingBag, CheckCircle } from "lucide-react";
 import { useState } from "react";
 import { categoryNames } from "@/data/products";
-import { z } from "zod";
-import { useToast } from "@/hooks/use-toast";
-import { sendTelegramNotification } from "@/lib/telegram";
-
-const orderSchema = z.object({
-  name: z.string().trim().min(2, "Имя должно содержать минимум 2 символа").max(100),
-  phone: z.string().trim().min(10, "Введите корректный номер телефона").max(20),
-  email: z.string().trim().email("Введите корректный email").max(255),
-  inn: z.string().max(12).optional().or(z.literal("")),
-  city: z.string().max(100).optional().or(z.literal("")),
-  address: z.string().max(300).optional().or(z.literal("")),
-  deliveryType: z.enum(["pickup", "delivery"]).optional(),
-  comment: z.string().max(500).optional().or(z.literal("")),
-});
-
-type OrderFormData = z.infer<typeof orderSchema>;
+import CheckoutForm from "@/components/checkout/CheckoutForm";
 
 const CartDrawer = () => {
   const { items, isCartOpen, setIsCartOpen, updateQuantity, removeFromCart, getTotalPrice, clearCart } = useCart();
