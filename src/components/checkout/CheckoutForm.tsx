@@ -22,7 +22,7 @@ const individualDeliveryOptions: DeliveryOption[] = [
     id: "pickup",
     icon: <MapPin className="h-5 w-5" />,
     title: "ПВЗ «Вмасле»",
-    subtitle: "Некрасовская 69 стр 1 · товар будет доставлен завтра",
+    subtitle: "Некрасовская 69 стр 1 · товар будет доставлен завтра\nПн–Пт: 10:00–18:00 · Сб, Вс — выходной",
   },
   {
     id: "city",
