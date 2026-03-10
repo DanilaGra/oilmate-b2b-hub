@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 import { useToast } from "@/hooks/use-toast";
 import { sendTelegramNotification } from "@/lib/telegram";
-import { MapPin, Truck, Package, Building2, User, ChevronLeft } from "lucide-react";
+import { MapPin, Truck, Package, Building2, User, ChevronLeft, Clock, CalendarCheck } from "lucide-react";
 
 type CustomerType = "individual" | "business";
 type DeliveryType = "pickup" | "city" | "shipping";
