@@ -470,7 +470,7 @@ const Header = () => {
                   <div className="flex flex-col gap-1 mt-1.5">
                     <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
                       <Package className="h-3 w-3" />
-                      Пункт выдачи — 1 доступен
+                      Пункт выдачи
                     </span>
                     <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
                       <Truck className="h-3 w-3" />
