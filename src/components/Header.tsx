@@ -124,7 +124,7 @@ const Header = () => {
                 onClick={() => setIsCityOpen(true)}
               >
                 <MapPin className="h-3.5 w-3.5 text-primary" />
-                <span className="text-sm font-medium text-foreground">
+                <span className="text-sm font-medium text-muted-foreground">
                   {cities.find(c => c.id === selectedCity)?.name}
                 </span>
                 <ChevronDown className="h-3.5 w-3.5" />
