@@ -322,44 +322,119 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
               <h3 className="text-sm font-semibold mb-3 text-foreground">Способ получения</h3>
               <div className="space-y-2">
                 {deliveryOptions.map((opt) => (
-                  <button
-                    key={opt.id}
-                    onClick={() => setDeliveryType(opt.id)}
-                    className={`w-full flex items-center gap-3 p-3.5 rounded-xl border transition-all text-left ${
-                      deliveryType === opt.id
-                        ? "border-accent bg-accent/5 ring-1 ring-accent"
-                        : "border-border hover:border-muted-foreground/30"
-                    }`}
-                  >
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-all ${
-                      deliveryType === opt.id ? "bg-gradient-to-br from-accent to-blue-400 text-accent-foreground" : "bg-muted text-muted-foreground"
-                    }`}>
-                      {opt.icon}
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="text-sm font-medium text-foreground">{opt.title}</div>
-                      <div className="text-xs text-muted-foreground">{opt.subtitle}</div>
-                      {deliveryType === opt.id && opt.details && (
-                        <div className="mt-2.5 space-y-1.5 pt-2.5 border-t border-border/50">
-                          {opt.details.map((detail, i) => (
-                            <div key={i} className={`flex items-center gap-2 text-xs ${
-                              detail.variant === "success" ? "text-green-600 font-medium" : detail.variant === "warning" ? "text-muted-foreground" : detail.highlight ? "text-accent font-semibold text-sm" : "text-muted-foreground"
+                  <div key={opt.id}>
+                    <button
+                      onClick={() => setDeliveryType(opt.id)}
+                      className={`w-full flex items-center gap-3 p-3.5 rounded-xl border transition-all text-left ${
+                        deliveryType === opt.id
+                          ? "border-accent bg-accent/5 ring-1 ring-accent"
+                          : "border-border hover:border-muted-foreground/30"
+                      }`}
+                    >
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-all ${
+                        deliveryType === opt.id ? "bg-gradient-to-br from-accent to-blue-400 text-accent-foreground" : "bg-muted text-muted-foreground"
+                      }`}>
+                        {opt.icon}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="text-sm font-medium text-foreground">{opt.title}</div>
+                        <div className="text-xs text-muted-foreground">{opt.subtitle}</div>
+                        {deliveryType === opt.id && opt.details && (
+                          <div className="mt-2.5 space-y-1.5 pt-2.5 border-t border-border/50">
+                            {opt.details.map((detail, i) => (
+                              <div key={i} className={`flex items-center gap-2 text-xs ${
+                                detail.variant === "success" ? "text-green-600 font-medium" : detail.variant === "warning" ? "text-muted-foreground" : detail.highlight ? "text-accent font-semibold text-sm" : "text-muted-foreground"
+                              }`}>
+                                {detail.icon && <span className="shrink-0">{detail.icon}</span>}
+                                <span>{detail.text}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                      <div className={`ml-auto w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                        deliveryType === opt.id ? "border-accent" : "border-muted-foreground/30"
+                      }`}>
+                        {deliveryType === opt.id && (
+                          <div className="w-2.5 h-2.5 rounded-full bg-accent" />
+                        )}
+                      </div>
+                    </button>
+                    
+                    {/* TC selection inside shipping option for individuals */}
+                    {opt.id === "shipping" && deliveryType === "shipping" && customerType === "individual" && (
+                      <div className="mt-2 ml-4 space-y-1.5">
+                        {transportCompanies.map((tc) => (
+                          <button
+                            key={tc.id}
+                            type="button"
+                            onClick={() => setSelectedTC(tc.id)}
+                            className={`w-full flex items-start gap-2.5 p-2.5 rounded-lg border transition-all text-left ${
+                              selectedTC === tc.id
+                                ? "border-accent bg-accent/5"
+                                : "border-border/60 hover:border-muted-foreground/30"
+                            }`}
+                          >
+                            <div className={`mt-0.5 w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                              selectedTC === tc.id ? "border-accent" : "border-muted-foreground/30"
                             }`}>
-                              {detail.icon && <span className="shrink-0">{detail.icon}</span>}
-                              <span>{detail.text}</span>
+                              {selectedTC === tc.id && <div className="w-1.5 h-1.5 rounded-full bg-accent" />}
                             </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                    <div className={`ml-auto w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                      deliveryType === opt.id ? "border-accent" : "border-muted-foreground/30"
-                    }`}>
-                      {deliveryType === opt.id && (
-                        <div className="w-2.5 h-2.5 rounded-full bg-accent" />
-                      )}
-                    </div>
-                  </button>
+                            <div className="flex-1 min-w-0">
+                              <div className="text-xs font-medium text-foreground">{tc.name}</div>
+                              <div className="text-[11px] text-muted-foreground mt-0.5">{tc.description}</div>
+                              <a
+                                href={tc.calcUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                                className="inline-flex items-center gap-1 text-[11px] text-accent hover:text-accent/80 mt-1 underline underline-offset-2"
+                              >
+                                Рассчитать стоимость
+                                <ExternalLink className="h-2.5 w-2.5" />
+                              </a>
+                            </div>
+                          </button>
+                        ))}
+                        
+                        {/* Custom TC - unified block with inline input */}
+                        <button
+                          type="button"
+                          onClick={() => setSelectedTC("custom")}
+                          className={`w-full flex items-start gap-2.5 p-2.5 rounded-lg border transition-all text-left ${
+                            selectedTC === "custom"
+                              ? "border-accent bg-accent/5"
+                              : "border-border/60 hover:border-muted-foreground/30"
+                          }`}
+                        >
+                          <div className={`mt-0.5 w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                            selectedTC === "custom" ? "border-accent" : "border-muted-foreground/30"
+                          }`}>
+                            {selectedTC === "custom" && <div className="w-1.5 h-1.5 rounded-full bg-accent" />}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="text-xs font-medium text-foreground mb-1">Другая ТК</div>
+                            {selectedTC === "custom" ? (
+                              <div onClick={(e) => e.stopPropagation()}>
+                                <Input
+                                  placeholder="Название транспортной компании"
+                                  value={customTCName}
+                                  onChange={(e) => {
+                                    setCustomTCName(e.target.value);
+                                    if (errors.customTC) setErrors((p) => ({ ...p, customTC: "" }));
+                                  }}
+                                  className={`h-8 text-xs ${errors.customTC ? "border-destructive" : ""}`}
+                                />
+                                {errors.customTC && <p className="text-[11px] text-destructive mt-1">{errors.customTC}</p>}
+                              </div>
+                            ) : (
+                              <div className="text-[11px] text-muted-foreground">Укажите свою транспортную компанию</div>
+                            )}
+                          </div>
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 ))}
               </div>
             </div>
@@ -375,86 +450,7 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
                   {renderField("ФИО", fullName, setFullName, "fullName", "Иванов Иван Иванович")}
                   {renderField("Телефон", phone, setPhone, "phone", "+7 (999) 123-45-67", "tel")}
                   {deliveryType === "city" && renderField("Адрес доставки", address, setAddress, "address", "ул. Примерная, д. 1, кв. 10")}
-                  {deliveryType === "shipping" && (
-                    <>
-                      {renderField("Город", city, setCity, "city", "Москва")}
-                      
-                      {/* Transport company selection */}
-                      <div>
-                        <label className="text-sm font-medium mb-2 block text-foreground">Транспортная компания</label>
-                        <div className="space-y-2">
-                          {transportCompanies.map((tc) => (
-                            <button
-                              key={tc.id}
-                              type="button"
-                              onClick={() => setSelectedTC(tc.id)}
-                              className={`w-full flex items-start gap-3 p-3 rounded-xl border transition-all text-left ${
-                                selectedTC === tc.id
-                                  ? "border-accent bg-accent/5 ring-1 ring-accent"
-                                  : "border-border hover:border-muted-foreground/30"
-                              }`}
-                            >
-                              <div className={`mt-0.5 w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                                selectedTC === tc.id ? "border-accent" : "border-muted-foreground/30"
-                              }`}>
-                                {selectedTC === tc.id && <div className="w-2 h-2 rounded-full bg-accent" />}
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <div className="text-sm font-medium text-foreground">{tc.name}</div>
-                                <div className="text-xs text-muted-foreground mt-0.5">{tc.description}</div>
-                                <a
-                                  href={tc.calcUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  onClick={(e) => e.stopPropagation()}
-                                  className="inline-flex items-center gap-1 text-xs text-accent hover:text-accent/80 mt-1.5 underline underline-offset-2"
-                                >
-                                  Рассчитать стоимость
-                                  <ExternalLink className="h-3 w-3" />
-                                </a>
-                              </div>
-                            </button>
-                          ))}
-                          
-                          {/* Custom TC option */}
-                          <button
-                            type="button"
-                            onClick={() => setSelectedTC("custom")}
-                            className={`w-full flex items-start gap-3 p-3 rounded-xl border transition-all text-left ${
-                              selectedTC === "custom"
-                                ? "border-accent bg-accent/5 ring-1 ring-accent"
-                                : "border-border hover:border-muted-foreground/30"
-                            }`}
-                          >
-                            <div className={`mt-0.5 w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                              selectedTC === "custom" ? "border-accent" : "border-muted-foreground/30"
-                            }`}>
-                              {selectedTC === "custom" && <div className="w-2 h-2 rounded-full bg-accent" />}
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <div className="text-sm font-medium text-foreground">Другая ТК</div>
-                              <div className="text-xs text-muted-foreground mt-0.5">Укажите свою транспортную компанию</div>
-                            </div>
-                          </button>
-                          
-                          {selectedTC === "custom" && (
-                            <div className="ml-7">
-                              <Input
-                                placeholder="Название транспортной компании"
-                                value={customTCName}
-                                onChange={(e) => {
-                                  setCustomTCName(e.target.value);
-                                  if (errors.customTC) setErrors((p) => ({ ...p, customTC: "" }));
-                                }}
-                                className={errors.customTC ? "border-destructive" : ""}
-                              />
-                              {errors.customTC && <p className="text-xs text-destructive mt-1">{errors.customTC}</p>}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </>
-                  )}
+                  {deliveryType === "shipping" && renderField("Город", city, setCity, "city", "Москва")}
                 </>
               ) : (
                 <>
