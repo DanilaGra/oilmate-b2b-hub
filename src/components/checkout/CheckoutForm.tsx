@@ -40,7 +40,7 @@ const individualDeliveryOptions: DeliveryOption[] = [
     id: "city",
     icon: <Truck className="h-5 w-5" />,
     title: "Доставка по городу",
-    subtitle: "Курьером до двери",
+    subtitle: "По вашему адресу",
   },
   {
     id: "shipping",
