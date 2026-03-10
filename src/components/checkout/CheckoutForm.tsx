@@ -324,7 +324,7 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
                         <div className="mt-2.5 space-y-1.5 pt-2.5 border-t border-border/50">
                           {opt.details.map((detail, i) => (
                             <div key={i} className={`flex items-center gap-2 text-xs ${
-                              detail.variant === "success" ? "text-green-600 font-medium" : detail.highlight ? "text-accent font-semibold text-sm" : "text-muted-foreground"
+                              detail.variant === "success" ? "text-green-600 font-medium" : detail.variant === "warning" ? "text-amber-600 font-medium" : detail.highlight ? "text-accent font-semibold text-sm" : "text-muted-foreground"
                             }`}>
                               {detail.icon && <span className="shrink-0">{detail.icon}</span>}
                               <span>{detail.text}</span>
