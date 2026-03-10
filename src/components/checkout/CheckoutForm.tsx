@@ -42,7 +42,7 @@ const businessDeliveryOptions: DeliveryOption[] = [
   {
     id: "pickup",
     icon: <MapPin className="h-5 w-5" />,
-    title: "Самовывоз с ПВЗ",
+    title: "ПВЗ «Вмасле»",
     subtitle: "Некрасовская 69 стр 1",
   },
   {
