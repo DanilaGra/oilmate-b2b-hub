@@ -43,7 +43,7 @@ const individualDeliveryOptions: DeliveryOption[] = [
     title: "Доставка по городу",
     subtitle: "По вашему адресу",
     details: [
-      { icon: <CalendarCheck className="h-3.5 w-3.5" />, text: "Заказ будет доставлен завтра", highlight: true },
+      { text: "Заказ будет доставлен завтра", highlight: true },
       { icon: <CircleCheck className="h-3.5 w-3.5" />, text: "Бесплатная доставка", variant: "success" },
     ],
   },
