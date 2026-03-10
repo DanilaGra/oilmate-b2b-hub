@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 import { useToast } from "@/hooks/use-toast";
 import { sendTelegramNotification } from "@/lib/telegram";
-import { MapPin, Truck, Package, Building2, User, ChevronLeft, Clock, CalendarCheck } from "lucide-react";
+import { MapPin, Truck, Package, Building2, User, ChevronLeft, Clock, CalendarCheck, CircleCheck } from "lucide-react";
 
 type CustomerType = "individual" | "business";
 type DeliveryType = "pickup" | "city" | "shipping";
@@ -14,6 +14,7 @@ interface DeliveryDetail {
   icon: React.ReactNode;
   text: string;
   highlight?: boolean;
+  variant?: "default" | "success";
 }
 
 interface DeliveryOption {
@@ -43,7 +44,7 @@ const individualDeliveryOptions: DeliveryOption[] = [
     subtitle: "По вашему адресу",
     details: [
       { icon: <CalendarCheck className="h-3.5 w-3.5" />, text: "Заказ будет доставлен завтра", highlight: true },
-      { icon: <Truck className="h-3.5 w-3.5" />, text: "Бесплатная доставка", highlight: true },
+      { icon: <CircleCheck className="h-3.5 w-3.5" />, text: "Бесплатная доставка", variant: "success" },
     ],
   },
   {
@@ -73,7 +74,7 @@ const businessDeliveryOptions: DeliveryOption[] = [
     subtitle: "По адресу вашей компании",
     details: [
       { icon: <CalendarCheck className="h-3.5 w-3.5" />, text: "Заказ будет доставлен завтра", highlight: true },
-      { icon: <Truck className="h-3.5 w-3.5" />, text: "Бесплатная доставка", highlight: true },
+      { icon: <CircleCheck className="h-3.5 w-3.5" />, text: "Бесплатная доставка", variant: "success" },
     ],
   },
   {
@@ -321,7 +322,9 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
                       {deliveryType === opt.id && opt.details && (
                         <div className="mt-2.5 space-y-1.5 pt-2.5 border-t border-border/50">
                           {opt.details.map((detail, i) => (
-                            <div key={i} className={`flex items-center gap-2 text-xs ${detail.highlight ? "text-accent font-medium" : "text-muted-foreground"}`}>
+                            <div key={i} className={`flex items-center gap-2 text-xs ${
+                              detail.variant === "success" ? "text-green-600 font-medium" : detail.highlight ? "text-accent font-medium" : "text-muted-foreground"
+                            }`}>
                               <span className="shrink-0">{detail.icon}</span>
                               <span>{detail.text}</span>
                             </div>
