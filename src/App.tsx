@@ -22,7 +22,6 @@ const App = () => (
         <Sonner />
         <CartDrawer />
         <CookieConsent />
-        <BottomNav />
         <BrowserRouter>
           <BottomNav />
           <Routes>
