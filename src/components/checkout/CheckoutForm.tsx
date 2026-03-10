@@ -68,6 +68,7 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
   const { items, getTotalPrice, clearCart } = useCart();
   const { toast } = useToast();
 
+  const [step, setStep] = useState<1 | 2>(1);
   const [customerType, setCustomerType] = useState<CustomerType>("individual");
   const [deliveryType, setDeliveryType] = useState<DeliveryType>("pickup");
   const [isSubmitting, setIsSubmitting] = useState(false);
