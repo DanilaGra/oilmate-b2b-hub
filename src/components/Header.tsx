@@ -28,8 +28,8 @@ const Header = () => {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const [selectedCity, setSelectedCity] = useState("vladivostok");
+  const [isCityOpen, setIsCityOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
   const catalogRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
