@@ -324,9 +324,11 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
               <div className="space-y-2">
                 {deliveryOptions.map((opt) => (
                   <div key={opt.id}>
-                    <button
+                    <div
                       onClick={() => setDeliveryType(opt.id)}
-                      className={`w-full flex items-center gap-3 p-3.5 rounded-xl border transition-all text-left ${
+                      role="button"
+                      tabIndex={0}
+                      className={`w-full flex items-start gap-3 p-3.5 rounded-xl border transition-all text-left cursor-pointer ${
                         deliveryType === opt.id
                           ? "border-accent bg-accent/5 ring-1 ring-accent"
                           : "border-border hover:border-muted-foreground/30"
