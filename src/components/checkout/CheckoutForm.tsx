@@ -125,6 +125,8 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
       if (deliveryType === "shipping" && !bizCity.trim()) newErrors.bizCity = "Введите город";
     }
 
+    if (!privacyAccepted) newErrors.privacy = "Необходимо согласие";
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
