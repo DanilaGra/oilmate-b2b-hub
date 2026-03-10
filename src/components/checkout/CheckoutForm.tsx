@@ -14,7 +14,7 @@ interface DeliveryDetail {
   icon?: React.ReactNode;
   text: string;
   highlight?: boolean;
-  variant?: "default" | "success";
+  variant?: "default" | "success" | "warning";
 }
 
 interface DeliveryOption {
@@ -65,6 +65,7 @@ const businessDeliveryOptions: DeliveryOption[] = [
       { icon: <MapPin className="h-3.5 w-3.5" />, text: "Некрасовская 69 стр 1" },
       { icon: <Clock className="h-3.5 w-3.5" />, text: "Пн–Пт: 10:00–18:00 · Сб, Вс — выходной" },
       { text: "Заказ будет доставлен завтра", highlight: true },
+      { text: "Только мелкая фасовка. Тара 200 л и более — доставка по городу или до ТК", variant: "warning" },
     ],
   },
   {
@@ -323,7 +324,7 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
                         <div className="mt-2.5 space-y-1.5 pt-2.5 border-t border-border/50">
                           {opt.details.map((detail, i) => (
                             <div key={i} className={`flex items-center gap-2 text-xs ${
-                              detail.variant === "success" ? "text-green-600 font-medium" : detail.highlight ? "text-accent font-semibold text-sm" : "text-muted-foreground"
+                              detail.variant === "success" ? "text-green-600 font-medium" : detail.variant === "warning" ? "text-amber-600 font-medium" : detail.highlight ? "text-accent font-semibold text-sm" : "text-muted-foreground"
                             }`}>
                               {detail.icon && <span className="shrink-0">{detail.icon}</span>}
                               <span>{detail.text}</span>
