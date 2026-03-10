@@ -164,12 +164,13 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
 
     setIsSubmitting(true);
 
+    const tcName = selectedTC === "custom" ? customTCName : transportCompanies.find(tc => tc.id === selectedTC)?.name || selectedTC;
     const deliveryLabel =
       deliveryType === "pickup"
         ? "Самовывоз (Некрасовская 69 стр 1)"
         : deliveryType === "city"
         ? "Доставка по городу"
-        : "Доставка по России (ТК)";
+        : `Доставка по России (${tcName})`;
 
     const orderData = {
       name: customerType === "individual" ? fullName : `Юр. лицо (ИНН: ${inn})`,
