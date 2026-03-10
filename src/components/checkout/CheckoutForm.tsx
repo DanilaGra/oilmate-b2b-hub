@@ -5,7 +5,21 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 import { useToast } from "@/hooks/use-toast";
 import { sendTelegramNotification } from "@/lib/telegram";
-import { MapPin, Truck, Package, Building2, User, ChevronLeft, Clock, CalendarCheck, CircleCheck, Info } from "lucide-react";
+import { MapPin, Truck, Package, Building2, User, ChevronLeft, Clock, CalendarCheck, CircleCheck, Info, ExternalLink } from "lucide-react";
+
+interface TransportCompany {
+  id: string;
+  name: string;
+  description: string;
+  calcUrl: string;
+}
+
+const transportCompanies: TransportCompany[] = [
+  { id: "kit", name: "ТК Кит", description: "Самый бюджетный вариант, заказ до 12 кг не более 500 ₽", calcUrl: "https://tkkit.ru/calculator" },
+  { id: "cdek", name: "СДЭК", description: "Экспресс-доставка по всей России", calcUrl: "https://www.cdek.ru/ru/calculator" },
+  { id: "dellin", name: "Деловые Линии", description: "Надёжная доставка для крупных грузов", calcUrl: "https://www.dellin.ru/calculator/" },
+  { id: "troika", name: "Тройка ДВ", description: "Доставка по Дальнему Востоку", calcUrl: "https://troikadv.ru" },
+];
 
 type CustomerType = "individual" | "business";
 type DeliveryType = "pickup" | "city" | "shipping";
