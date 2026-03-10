@@ -467,14 +467,18 @@ const Header = () => {
                     <span className={cn("font-semibold", selectedCity === "vladivostok" ? "text-primary" : "text-foreground")}>Владивосток</span>
                     {selectedCity === "vladivostok" && <Check className="h-4 w-4 text-primary" />}
                   </div>
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5">
+                  <div className="flex flex-col gap-1 mt-1.5">
                     <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
                       <Package className="h-3 w-3" />
-                      Пункт выдачи
+                      Пункт выдачи — 1 доступен
                     </span>
                     <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
                       <Truck className="h-3 w-3" />
                       Доставка по Приморскому краю
+                    </span>
+                    <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+                      <Truck className="h-3 w-3" />
+                      Доставка до ТК
                     </span>
                   </div>
                 </div>
