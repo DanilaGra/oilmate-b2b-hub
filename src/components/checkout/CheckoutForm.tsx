@@ -363,9 +363,9 @@ const CheckoutForm = ({ onBack, onComplete }: CheckoutFormProps) => {
                                 key={tc.id}
                                 type="button"
                                 onClick={(e) => { e.stopPropagation(); setSelectedTC(tc.id); }}
-                                className={`w-full flex items-start gap-2.5 p-2.5 rounded-lg border transition-all text-left ${
+                                className={`w-full flex items-start gap-2.5 p-2.5 rounded-lg border transition-all text-left bg-background ${
                                   selectedTC === tc.id
-                                    ? "border-accent bg-accent/5"
+                                    ? "border-accent ring-1 ring-accent"
                                     : "border-border/60 hover:border-muted-foreground/30"
                                 }`}
                               >
