@@ -377,7 +377,7 @@ const Catalog = () => {
             setPriceFrom(from > 0 ? String(from) : "");
             setPriceTo(to < 30000 ? String(to) : "");
           }}
-          className="cursor-grab active:cursor-grabbing [&_[role=slider]]:h-5 [&_[role=slider]]:w-5 [&_[role=slider]]:bg-destructive [&_[role=slider]]:border-destructive [&_[role=slider]]:cursor-grab [&_[role=slider]]:active:cursor-grabbing [&_[role=slider]]:shadow-md"
+          className="cursor-grab active:cursor-grabbing [&_[role=slider]]:h-4 [&_[role=slider]]:w-4 [&_[role=slider]]:rounded-full [&_[role=slider]]:bg-accent [&_[role=slider]]:border-accent [&_[role=slider]]:cursor-grab [&_[role=slider]]:active:cursor-grabbing [&_[role=slider]]:shadow-md [&_span.absolute]:bg-accent"
         />
       </div>
 
