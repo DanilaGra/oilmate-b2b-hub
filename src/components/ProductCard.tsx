@@ -44,77 +44,55 @@ const ProductCard = ({
   const discountPercent = oldPrice ? Math.round((1 - price / oldPrice) * 100) : null;
 
   return (
-    <div className="group relative flex flex-col h-full rounded-2xl bg-card border border-border/50 overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-border">
+    <div className="group relative flex flex-col h-full">
       <Link to={`/product/${id}`} className="flex flex-col flex-1">
-        {/* Top section: brand + direct supply badge */}
-        <div className="px-3 pt-3 pb-1">
-          <div className="flex items-start justify-between gap-2 mb-1.5">
-            <h3 className="text-xs font-semibold text-foreground uppercase leading-tight line-clamp-2">
-              {name}
-            </h3>
-            <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
-              <span className="text-[10px] font-bold text-primary">{brand.charAt(0)}</span>
-            </div>
-          </div>
-          <p className="text-[10px] text-accent font-semibold uppercase tracking-wide">
-            Поставляется напрямую от производителя
-          </p>
-        </div>
-
         {/* Image */}
-        <div className="relative px-2 py-3 flex-1 flex items-center justify-center">
-          <div className="relative w-full aspect-square flex items-center justify-center bg-gradient-to-br from-muted/30 to-muted/60 rounded-xl">
+        <div className="relative mb-2.5 overflow-hidden rounded-2xl bg-muted">
+          <div className="aspect-[3/4] flex items-center justify-center">
             <img
               src={image}
               alt={name}
-              className="h-full w-full object-contain p-4 transition-transform group-hover:scale-105"
+              className="h-full w-full object-contain p-6 transition-transform group-hover:scale-105"
             />
-            
-            {/* Volume badge */}
-            <div className="absolute left-2 top-2 flex items-center gap-1 bg-accent/10 text-accent rounded-md px-1.5 py-0.5">
-              <span className="text-xs font-bold">{volume}</span>
+          </div>
+
+          {/* Discount badge */}
+          {discountPercent && discountPercent > 0 && (
+            <div className="absolute left-2 bottom-2 bg-accent text-accent-foreground rounded-lg px-2 py-0.5">
+              <span className="text-xs font-bold">-{discountPercent}%</span>
             </div>
-
-            {/* Discount badge */}
-            {discountPercent && discountPercent > 0 && (
-              <div className="absolute left-2 bottom-2 bg-accent text-accent-foreground rounded-md px-2 py-0.5">
-                <span className="text-xs font-bold">-{discountPercent}%</span>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Info section */}
-        <div className="px-3 pb-1">
-          <p className="text-[11px] text-muted-foreground line-clamp-1 mb-1.5">
-            {oilType} · {volume}
-          </p>
-
-          {/* Rating placeholder */}
-          <div className="flex items-center gap-1 mb-2">
-            <Star className="h-3 w-3 fill-warning text-warning" />
-            <span className="text-xs font-medium text-foreground">4.8</span>
-            <span className="text-[10px] text-muted-foreground">· {brand}</span>
-          </div>
+          )}
         </div>
 
         {/* Price */}
-        <div className="px-3 pb-2">
-          <div className="flex items-baseline gap-2">
-            <span className={`text-lg font-bold ${oldPrice ? 'text-accent' : 'text-foreground'}`}>
-              {rubles.toLocaleString("ru-RU")} ₽
+        <div className="flex items-baseline gap-2 mb-1 px-0.5">
+          <span className={`text-lg font-bold ${oldPrice ? 'text-accent' : 'text-foreground'}`}>
+            {rubles.toLocaleString("ru-RU")} ₽
+          </span>
+          {oldRubles && (
+            <span className="text-xs text-muted-foreground line-through">
+              {oldRubles.toLocaleString("ru-RU")} ₽
             </span>
-            {oldRubles && (
-              <span className="text-xs text-muted-foreground line-through">
-                {oldRubles.toLocaleString("ru-RU")} ₽
-              </span>
-            )}
-          </div>
+          )}
+        </div>
+
+        {/* Brand / Name */}
+        <p className="text-sm text-foreground line-clamp-2 leading-snug mb-1.5 px-0.5">
+          <span className="text-accent font-medium">{brand}</span>
+          <span className="text-muted-foreground"> / </span>
+          <span className="text-muted-foreground">{name}</span>
+        </p>
+
+        {/* Rating */}
+        <div className="flex items-center gap-1 px-0.5 mb-3">
+          <Star className="h-3.5 w-3.5 fill-warning text-warning" />
+          <span className="text-xs font-medium text-foreground">4.8</span>
+          <span className="text-xs text-muted-foreground">· 124 оценки</span>
         </div>
       </Link>
 
-      {/* Add to cart button */}
-      <div className="px-3 pb-3">
+      {/* Add to cart */}
+      <div className="mt-auto">
         <AddToCartButton product={{ id: Number(id), name, brand, volume, price, oldPrice, image, inStock, oilType, isUniversal, category: category || '' }} />
       </div>
     </div>
@@ -142,7 +120,7 @@ const AddToCartButton = ({ product }: { product: any }) => {
   return (
     <Button
       variant="ghost"
-      className={`w-full rounded-xl font-medium h-10 transition-all ${
+      className={`w-full rounded-xl font-medium h-11 transition-all ${
         added
           ? "bg-green-100 text-green-700 hover:bg-green-100"
           : "gradient-primary text-primary-foreground hover:opacity-90"
