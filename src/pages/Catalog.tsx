@@ -129,9 +129,9 @@ const CheckboxFilter = ({
       {hiddenCount > 0 && !showAll && (
         <button
           onClick={() => setShowAll(true)}
-          className="flex items-center gap-1 text-muted-foreground text-sm mt-1 hover:text-primary transition-colors"
+          className="flex items-center gap-1 text-muted-foreground text-sm mt-2 hover:text-primary transition-colors"
         >
-          Показать ещё {hiddenCount}
+          Показать ещё {hiddenCount} из {items.length}
           <ChevronDown className="h-3.5 w-3.5" />
         </button>
       )}
