@@ -56,9 +56,9 @@ const ProductCard = ({
               className="h-full w-full object-contain p-6 transition-transform group-hover:scale-105"
             />
           </div>
-          {discountPercent && discountPercent > 0 && (
-            <div className="absolute left-2 bottom-2 bg-accent text-accent-foreground rounded-lg px-2 py-0.5">
-              <span className="text-xs font-bold">-{discountPercent}%</span>
+          {oldPrice && (
+            <div className="absolute left-2 bottom-2 bg-gradient-to-r from-[hsl(211,100%,30%)] to-[hsl(211,100%,50%)] text-accent-foreground rounded-full px-2.5 py-1">
+              <span className="text-[10px] font-bold uppercase tracking-wide">Распродажа</span>
             </div>
           )}
         </div>
