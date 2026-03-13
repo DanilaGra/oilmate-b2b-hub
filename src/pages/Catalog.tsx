@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "@/components/ui/slider";
-import { SlidersHorizontal, X, ChevronLeft, ShoppingCart, ChevronDown } from "lucide-react";
+import { SlidersHorizontal, X, ChevronLeft, ShoppingCart, ChevronDown, ChevronUp, ArrowUpDown } from "lucide-react";
 import { useParams, useSearchParams, Link, useNavigate } from "react-router-dom";
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { useCart } from "@/contexts/CartContext";
 import { allProducts, categoryNames, type ProductData } from "@/data/products";
 import { categories } from "@/data/categories";
@@ -161,6 +161,8 @@ const Catalog = () => {
   const [priceFrom, setPriceFrom] = useState("");
   const [priceTo, setPriceTo] = useState("");
   const [sortOrder, setSortOrder] = useState<"default" | "price_asc" | "price_desc">("default");
+  const [isSortOpen, setIsSortOpen] = useState(false);
+  const sortRef = useRef<HTMLDivElement>(null);
   const [showFilters, setShowFilters] = useState(false);
   const [showFloatingWidgets, setShowFloatingWidgets] = useState(false);
 
@@ -195,6 +197,23 @@ const Catalog = () => {
       document.body.style.overflow = '';
     };
   }, [showFilters]);
+
+  // Close sort dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (sortRef.current && !sortRef.current.contains(e.target as Node)) {
+        setIsSortOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const sortLabels: Record<string, string> = {
+    default: "По популярности",
+    price_asc: "По возрастанию цены",
+    price_desc: "По убыванию цены",
+  };
 
   const clearSearch = () => {
     searchParams.delete("search");
@@ -538,23 +557,35 @@ const Catalog = () => {
             </div>
             <div className="flex items-center gap-2">
               {(activeCategory || searchQuery) && (
-                <div className="hidden md:flex items-center gap-1.5">
+                <div className="relative hidden md:block" ref={sortRef}>
                   <button
-                    onClick={() => setSortOrder(sortOrder === "price_asc" ? "default" : "price_asc")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
-                      sortOrder === "price_asc" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"
-                    }`}
+                    onClick={() => setIsSortOpen(!isSortOpen)}
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-sm font-medium text-foreground hover:bg-muted transition-colors"
                   >
-                    Сначала дешёвые
+                    <ArrowUpDown className="h-4 w-4 text-muted-foreground" />
+                    {sortLabels[sortOrder]}
+                    <ChevronDown className={`h-3.5 w-3.5 text-muted-foreground transition-transform ${isSortOpen ? 'rotate-180' : ''}`} />
                   </button>
-                  <button
-                    onClick={() => setSortOrder(sortOrder === "price_desc" ? "default" : "price_desc")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
-                      sortOrder === "price_desc" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    Сначала дорогие
-                  </button>
+                  {isSortOpen && (
+                    <div className="absolute right-0 top-full mt-1.5 w-56 bg-card rounded-xl border border-border shadow-lg z-30 py-1.5">
+                      {(["default", "price_asc", "price_desc"] as const).map((key) => (
+                        <button
+                          key={key}
+                          onClick={() => { setSortOrder(key); setIsSortOpen(false); }}
+                          className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-left hover:bg-muted transition-colors"
+                        >
+                          <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                            sortOrder === key ? 'border-accent' : 'border-border'
+                          }`}>
+                            {sortOrder === key && <div className="w-2 h-2 rounded-full bg-accent" />}
+                          </div>
+                          <span className={sortOrder === key ? 'font-medium text-foreground' : 'text-muted-foreground'}>
+                            {sortLabels[key]}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
               {activeCategory && (
