@@ -92,7 +92,7 @@ const getAvailableFilters = (products: ProductData[], category: string | null) =
   return { brands, volumes, specificFilters };
 };
 
-const ChipFilter = ({ 
+const CheckboxFilter = ({ 
   items, 
   selected, 
   onToggle,
@@ -110,36 +110,38 @@ const ChipFilter = ({
   if (items.length === 0) return null;
 
   return (
-    <div>
-      <div className="flex flex-wrap gap-2">
-        {visibleItems.map((item) => (
-          <button
-            key={item}
-            onClick={() => onToggle(item)}
-            className={`px-3 py-1.5 rounded-full text-sm transition-all ${
-              selected.includes(item)
-                ? "bg-primary text-primary-foreground"
-                : "bg-muted text-foreground hover:bg-muted-foreground/20"
-            }`}
-          >
+    <div className="space-y-2.5">
+      {visibleItems.map((item) => (
+        <label
+          key={item}
+          className="flex items-center gap-2.5 cursor-pointer group"
+        >
+          <Checkbox
+            checked={selected.includes(item)}
+            onCheckedChange={() => onToggle(item)}
+            className="h-[18px] w-[18px] rounded border-border data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+          />
+          <span className="text-sm text-foreground group-hover:text-primary transition-colors leading-tight">
             {item}
-          </button>
-        ))}
-      </div>
+          </span>
+        </label>
+      ))}
       {hiddenCount > 0 && !showAll && (
         <button
           onClick={() => setShowAll(true)}
-          className="text-primary text-sm mt-2 hover:underline"
+          className="flex items-center gap-1 text-muted-foreground text-sm mt-1 hover:text-primary transition-colors"
         >
-          Ещё {hiddenCount}
+          Показать ещё {hiddenCount}
+          <ChevronDown className="h-3.5 w-3.5" />
         </button>
       )}
       {showAll && hiddenCount > 0 && (
         <button
           onClick={() => setShowAll(false)}
-          className="text-primary text-sm mt-2 hover:underline"
+          className="flex items-center gap-1 text-muted-foreground text-sm mt-1 hover:text-primary transition-colors"
         >
           Свернуть
+          <ChevronDown className="h-3.5 w-3.5 rotate-180" />
         </button>
       )}
     </div>
