@@ -163,7 +163,7 @@ const Header = () => {
             {/* Catalog button with dropdown - desktop only */}
             <div className="relative hidden md:block" ref={catalogRef}>
               <Button 
-                className="flex gap-2 bg-gradient-to-r from-[hsl(211,100%,30%)] to-[hsl(211,100%,50%)] hover:from-[hsl(211,100%,25%)] hover:to-[hsl(211,100%,45%)] text-primary-foreground font-semibold px-6 h-12 rounded-full shrink-0 transition-all"
+                className="flex gap-2 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-6 h-12 rounded-full shrink-0 transition-all"
                 onClick={() => setIsCatalogOpen(!isCatalogOpen)}
               >
                 {isCatalogOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
