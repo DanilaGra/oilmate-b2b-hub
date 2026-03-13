@@ -160,6 +160,7 @@ const Catalog = () => {
   const [selectedVolumes, setSelectedVolumes] = useState<string[]>([]);
   const [priceFrom, setPriceFrom] = useState("");
   const [priceTo, setPriceTo] = useState("");
+  const [sortOrder, setSortOrder] = useState<"default" | "price_asc" | "price_desc">("default");
   const [showFilters, setShowFilters] = useState(false);
   const [showFloatingWidgets, setShowFloatingWidgets] = useState(false);
 
@@ -300,6 +301,13 @@ const Catalog = () => {
       return true;
     });
   }, [searchQuery, activeCategory, selectedBrands, selectedVolumes, priceFrom, priceTo, categoryFilters, availableFilters]);
+
+  const sortedProducts = useMemo(() => {
+    const sorted = [...filteredProducts];
+    if (sortOrder === "price_asc") sorted.sort((a, b) => a.price - b.price);
+    if (sortOrder === "price_desc") sorted.sort((a, b) => b.price - a.price);
+    return sorted;
+  }, [filteredProducts, sortOrder]);
 
   const structuredData = useMemo(() => ({
     "@context": "https://schema.org",
@@ -516,7 +524,7 @@ const Catalog = () => {
             <div className="flex items-center gap-2 md:gap-3 flex-wrap">
               <h1 className="text-xl md:text-2xl font-semibold text-foreground">{categoryTitle}</h1>
               {(activeCategory || searchQuery) && (
-                <span className="text-base md:text-lg text-muted-foreground">{filteredProducts.length} товаров</span>
+                <span className="text-base md:text-lg text-muted-foreground">{sortedProducts.length} товаров</span>
               )}
               {searchQuery && (
                 <button
@@ -528,19 +536,41 @@ const Catalog = () => {
                 </button>
               )}
             </div>
-            {activeCategory && (
-              <Button
-                variant="outline"
-                className="md:hidden gap-2 shrink-0"
-                onClick={() => setShowFilters(true)}
-              >
-                <SlidersHorizontal className="h-4 w-4" />
-                Фильтры
-                {hasActiveFilters && (
-                  <span className="w-2 h-2 bg-primary rounded-full" />
-                )}
-              </Button>
-            )}
+            <div className="flex items-center gap-2">
+              {(activeCategory || searchQuery) && (
+                <div className="hidden md:flex items-center gap-1.5">
+                  <button
+                    onClick={() => setSortOrder(sortOrder === "price_asc" ? "default" : "price_asc")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+                      sortOrder === "price_asc" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    Сначала дешёвые
+                  </button>
+                  <button
+                    onClick={() => setSortOrder(sortOrder === "price_desc" ? "default" : "price_desc")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+                      sortOrder === "price_desc" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    Сначала дорогие
+                  </button>
+                </div>
+              )}
+              {activeCategory && (
+                <Button
+                  variant="outline"
+                  className="md:hidden gap-2 shrink-0"
+                  onClick={() => setShowFilters(true)}
+                >
+                  <SlidersHorizontal className="h-4 w-4" />
+                  Фильтры
+                  {hasActiveFilters && (
+                    <span className="w-2 h-2 bg-primary rounded-full" />
+                  )}
+                </Button>
+              )}
+            </div>
           </div>
 
           {/* Category selection view (when no specific category selected) */}
@@ -603,9 +633,9 @@ const Catalog = () => {
             {/* Products grid */}
             <div className="flex-1">
               
-              {filteredProducts.length > 0 ? (
+              {sortedProducts.length > 0 ? (
                 <div className="grid gap-3 md:gap-4 grid-cols-2 lg:grid-cols-3">
-                  {filteredProducts.map((product, index) => (
+                  {sortedProducts.map((product, index) => (
                     <ProductCard key={index} {...product} />
                   ))}
                 </div>
