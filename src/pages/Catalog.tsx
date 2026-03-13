@@ -3,7 +3,9 @@ import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { SlidersHorizontal, X, ChevronLeft, ShoppingCart } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Slider } from "@/components/ui/slider";
+import { SlidersHorizontal, X, ChevronLeft, ShoppingCart, ChevronDown } from "lucide-react";
 import { useParams, useSearchParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { useCart } from "@/contexts/CartContext";
@@ -90,7 +92,7 @@ const getAvailableFilters = (products: ProductData[], category: string | null) =
   return { brands, volumes, specificFilters };
 };
 
-const ChipFilter = ({ 
+const CheckboxFilter = ({ 
   items, 
   selected, 
   onToggle,
@@ -108,36 +110,38 @@ const ChipFilter = ({
   if (items.length === 0) return null;
 
   return (
-    <div>
-      <div className="flex flex-wrap gap-2">
-        {visibleItems.map((item) => (
-          <button
-            key={item}
-            onClick={() => onToggle(item)}
-            className={`px-3 py-1.5 rounded-full text-sm transition-all ${
-              selected.includes(item)
-                ? "bg-primary text-primary-foreground"
-                : "bg-muted text-foreground hover:bg-muted-foreground/20"
-            }`}
-          >
+    <div className="space-y-2.5">
+      {visibleItems.map((item) => (
+        <label
+          key={item}
+          className="flex items-center gap-2.5 cursor-pointer group"
+        >
+          <Checkbox
+            checked={selected.includes(item)}
+            onCheckedChange={() => onToggle(item)}
+            className="h-[18px] w-[18px] rounded border-border data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+          />
+          <span className="text-sm text-foreground group-hover:text-primary transition-colors leading-tight">
             {item}
-          </button>
-        ))}
-      </div>
+          </span>
+        </label>
+      ))}
       {hiddenCount > 0 && !showAll && (
         <button
           onClick={() => setShowAll(true)}
-          className="text-primary text-sm mt-2 hover:underline"
+          className="flex items-center gap-1 text-muted-foreground text-sm mt-1 hover:text-primary transition-colors"
         >
-          Ещё {hiddenCount}
+          Показать ещё {hiddenCount}
+          <ChevronDown className="h-3.5 w-3.5" />
         </button>
       )}
       {showAll && hiddenCount > 0 && (
         <button
           onClick={() => setShowAll(false)}
-          className="text-primary text-sm mt-2 hover:underline"
+          className="flex items-center gap-1 text-muted-foreground text-sm mt-1 hover:text-primary transition-colors"
         >
           Свернуть
+          <ChevronDown className="h-3.5 w-3.5 rotate-180" />
         </button>
       )}
     </div>
@@ -342,37 +346,45 @@ const Catalog = () => {
   const FiltersContent = () => (
     <>
       {/* Price filter */}
-      <div className="mb-6">
-        <span className="text-sm text-muted-foreground mb-3 block">Цена</span>
-        <div className="flex gap-2">
-          <div className="relative flex-1">
-            <Input
-              type="number"
-              placeholder="от"
-              value={priceFrom}
-              onChange={(e) => setPriceFrom(e.target.value)}
-              className="pr-6 rounded-xl"
-            />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">₽</span>
-          </div>
-          <div className="relative flex-1">
-            <Input
-              type="number"
-              placeholder="до"
-              value={priceTo}
-              onChange={(e) => setPriceTo(e.target.value)}
-              className="pr-6 rounded-xl"
-            />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">₽</span>
-          </div>
+      <div className="mb-8">
+        <span className="text-sm font-semibold text-foreground mb-3 block">Цена, ₽</span>
+        <div className="flex gap-2 mb-3">
+          <Input
+            type="number"
+            placeholder="от 0"
+            value={priceFrom}
+            onChange={(e) => setPriceFrom(e.target.value)}
+            className="rounded-lg border-border text-sm"
+          />
+          <Input
+            type="number"
+            placeholder="до 30 000"
+            value={priceTo}
+            onChange={(e) => setPriceTo(e.target.value)}
+            className="rounded-lg border-border text-sm"
+          />
         </div>
+        <Slider
+          min={0}
+          max={30000}
+          step={100}
+          value={[
+            priceFrom ? parseInt(priceFrom) : 0,
+            priceTo ? parseInt(priceTo) : 30000,
+          ]}
+          onValueChange={([from, to]) => {
+            setPriceFrom(from > 0 ? String(from) : "");
+            setPriceTo(to < 30000 ? String(to) : "");
+          }}
+          className="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4 [&_[role=slider]]:bg-destructive [&_[role=slider]]:border-destructive [&_.relative>span]:bg-destructive"
+        />
       </div>
 
       {/* Brand filter */}
       {availableFilters.brands.length > 0 && (
-        <div className="mb-6">
-          <span className="text-sm text-muted-foreground mb-3 block">Бренд</span>
-          <ChipFilter
+        <div className="mb-8">
+          <span className="text-sm font-semibold text-foreground mb-3 block">Бренд</span>
+          <CheckboxFilter
             items={availableFilters.brands}
             selected={selectedBrands}
             onToggle={(item) => toggleFilter(item, selectedBrands, setSelectedBrands)}
@@ -381,28 +393,28 @@ const Catalog = () => {
         </div>
       )}
       
-      {/* Volume filter - show only if volumes exist for category */}
+      {/* Volume filter */}
       {availableFilters.volumes.length > 0 && activeCategory !== 'lubricants' && (
-        <div className="mb-6">
-          <span className="text-sm text-muted-foreground mb-3 block">Объем</span>
-          <ChipFilter
+        <div className="mb-8">
+          <span className="text-sm font-semibold text-foreground mb-3 block">Объём, л</span>
+          <CheckboxFilter
             items={availableFilters.volumes}
             selected={selectedVolumes}
             onToggle={(item) => toggleFilter(item, selectedVolumes, setSelectedVolumes)}
-            visibleCount={4}
+            visibleCount={5}
           />
         </div>
       )}
 
       {/* Category-specific filters */}
       {availableFilters.specificFilters.map(filter => (
-        <div key={filter.key} className="mb-6">
-          <span className="text-sm text-muted-foreground mb-3 block">{filter.label}</span>
-          <ChipFilter
+        <div key={filter.key} className="mb-8">
+          <span className="text-sm font-semibold text-foreground mb-3 block">{filter.label}</span>
+          <CheckboxFilter
             items={filter.options}
             selected={categoryFilters[filter.key] || []}
             onToggle={(item) => toggleCategoryFilter(filter.key, item)}
-            visibleCount={4}
+            visibleCount={5}
           />
         </div>
       ))}
