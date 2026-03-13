@@ -58,7 +58,7 @@ const ProductCard = ({
           </div>
           {oldPrice && discountPercent && (
             <div className="absolute left-2 bottom-2 flex flex-col items-start gap-1.5">
-              <div className="bg-gradient-to-r from-[hsl(0,80%,50%)] to-[hsl(30,90%,50%)] text-white rounded-full px-2.5 py-1 flex items-center justify-center">
+              <div className="bg-gradient-to-r from-[hsl(0,85%,45%)] to-[hsl(0,75%,55%)] text-white rounded-full px-2.5 py-1 flex items-center justify-center">
                 <span className="text-[9px] font-bold leading-none">-{discountPercent}%</span>
               </div>
               <div className="bg-gradient-to-r from-[hsl(211,100%,30%)] to-[hsl(211,100%,50%)] text-accent-foreground rounded-full px-3.5 py-1.5 flex items-center justify-center">
