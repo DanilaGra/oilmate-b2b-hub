@@ -428,15 +428,13 @@ const Catalog = () => {
         Применить
       </Button>
 
-      {hasActiveFilters && (
-        <Button
-          variant="ghost"
-          className="w-full text-primary mt-2"
-          onClick={resetFilters}
-        >
-          Сбросить фильтры
-        </Button>
-      )}
+      <Button
+        variant="ghost"
+        className="w-full text-muted-foreground mt-2"
+        onClick={resetFilters}
+      >
+        Сбросить фильтры
+      </Button>
     </>
   );
 
