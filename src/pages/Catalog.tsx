@@ -302,6 +302,13 @@ const Catalog = () => {
     });
   }, [searchQuery, activeCategory, selectedBrands, selectedVolumes, priceFrom, priceTo, categoryFilters, availableFilters]);
 
+  const sortedProducts = useMemo(() => {
+    const sorted = [...filteredProducts];
+    if (sortOrder === "price_asc") sorted.sort((a, b) => a.price - b.price);
+    if (sortOrder === "price_desc") sorted.sort((a, b) => b.price - a.price);
+    return sorted;
+  }, [filteredProducts, sortOrder]);
+
   const structuredData = useMemo(() => ({
     "@context": "https://schema.org",
     "@type": "ItemList",
