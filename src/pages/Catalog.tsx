@@ -160,6 +160,7 @@ const Catalog = () => {
   const [selectedVolumes, setSelectedVolumes] = useState<string[]>([]);
   const [priceFrom, setPriceFrom] = useState("");
   const [priceTo, setPriceTo] = useState("");
+  const [sortOrder, setSortOrder] = useState<"default" | "price_asc" | "price_desc">("default");
   const [showFilters, setShowFilters] = useState(false);
   const [showFloatingWidgets, setShowFloatingWidgets] = useState(false);
 
