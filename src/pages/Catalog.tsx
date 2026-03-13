@@ -198,6 +198,23 @@ const Catalog = () => {
     };
   }, [showFilters]);
 
+  // Close sort dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (sortRef.current && !sortRef.current.contains(e.target as Node)) {
+        setIsSortOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const sortLabels: Record<string, string> = {
+    default: "По популярности",
+    price_asc: "По возрастанию цены",
+    price_desc: "По убыванию цены",
+  };
+
   const clearSearch = () => {
     searchParams.delete("search");
     setSearchParams(searchParams);
