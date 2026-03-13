@@ -37,6 +37,7 @@ const Index = () => {
       <main>
         <HeroBanner />
         <Categories />
+        <SaleSection />
         <ProductsSection />
       </main>
       <Footer />
