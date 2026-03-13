@@ -83,8 +83,9 @@ const Footer = () => {
           ))}
         </div>
 
-        {/* Bottom bar */}
-        <div className="mt-10 pt-6 border-t border-background/10 flex items-center justify-between">
+        {/* Copyright + Bottom bar */}
+        <p className="mt-10 text-xs opacity-40">© OilMate 2024–2026. Все права защищены.</p>
+        <div className="mt-3 pt-4 border-t border-background/10 flex items-center">
           <div className="flex items-center gap-5">
             {/* Telegram */}
             <a href="#" className="opacity-50 hover:opacity-100 transition-opacity">
@@ -97,8 +98,6 @@ const Footer = () => {
               </svg>
             </a>
           </div>
-
-          <p className="text-xs opacity-40">© OilMate 2024–2026. Все права защищены.</p>
         </div>
       </div>
 
