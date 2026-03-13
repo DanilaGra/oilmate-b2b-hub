@@ -7,7 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "@/components/ui/slider";
 import { SlidersHorizontal, X, ChevronLeft, ShoppingCart, ChevronDown, ChevronUp, ArrowUpDown } from "lucide-react";
 import { useParams, useSearchParams, Link, useNavigate } from "react-router-dom";
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { useCart } from "@/contexts/CartContext";
 import { allProducts, categoryNames, type ProductData } from "@/data/products";
 import { categories } from "@/data/categories";
