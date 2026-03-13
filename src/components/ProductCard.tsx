@@ -81,13 +81,9 @@ const ProductCard = ({
         </p>
 
         {/* Parameters */}
-        <div className="flex flex-wrap gap-1 px-0.5 mb-3">
-          {viscosity && (
-            <span className="text-[11px] text-muted-foreground bg-muted rounded-md px-1.5 py-0.5">{viscosity}</span>
-          )}
-          <span className="text-[11px] text-muted-foreground bg-muted rounded-md px-1.5 py-0.5">{oilType}</span>
-          <span className="text-[11px] text-muted-foreground bg-muted rounded-md px-1.5 py-0.5">{volume}</span>
-        </div>
+        <p className="text-xs text-muted-foreground px-0.5 mb-3">
+          {[viscosity, oilType, volume].filter(Boolean).join(" · ")}
+        </p>
       </Link>
 
       {/* Add to cart */}
