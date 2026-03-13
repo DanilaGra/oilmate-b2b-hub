@@ -576,9 +576,24 @@ const Catalog = () => {
             {/* Filters sidebar - desktop, only show when category is selected */}
             {activeCategory && (
               <aside className="hidden md:block w-64 shrink-0">
-                <div className="sticky top-24 bg-card rounded-2xl p-5">
-                  <h3 className="font-medium text-foreground mb-5">Фильтры</h3>
-                  <FiltersContent />
+                <div className="sticky top-24">
+                  {/* Category breadcrumb above filters */}
+                  <div className="bg-card rounded-2xl p-4 mb-3">
+                    <button
+                      onClick={() => navigate("/catalog")}
+                      className="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors mb-2"
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                      Все категории
+                    </button>
+                    <span className="text-sm font-medium text-foreground pl-5 block">
+                      {categoryNames[activeCategory]}
+                    </span>
+                  </div>
+
+                  <div className="bg-card rounded-2xl p-5">
+                    <h3 className="font-medium text-foreground mb-5">Фильтры</h3>
+                    <FiltersContent />
                 </div>
               </aside>
             )}
