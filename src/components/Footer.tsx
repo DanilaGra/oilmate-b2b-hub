@@ -70,7 +70,7 @@ const Footer = () => {
 
         <div className="mt-8 pt-6 border-t border-border flex items-center justify-between">
           <div>
-            <p className="text-xs text-muted-foreground">© OilMate 2024–2026. Все права защищены.</p>
+            <p className="text-sm text-muted-foreground">© OilMate 2024–2026. Все права защищены.</p>
           </div>
           <div className="flex items-center gap-4">
             {/* VK */}
