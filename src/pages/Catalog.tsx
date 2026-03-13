@@ -557,23 +557,35 @@ const Catalog = () => {
             </div>
             <div className="flex items-center gap-2">
               {(activeCategory || searchQuery) && (
-                <div className="hidden md:flex items-center gap-1.5">
+                <div className="relative hidden md:block" ref={sortRef}>
                   <button
-                    onClick={() => setSortOrder(sortOrder === "price_asc" ? "default" : "price_asc")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
-                      sortOrder === "price_asc" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"
-                    }`}
+                    onClick={() => setIsSortOpen(!isSortOpen)}
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-sm font-medium text-foreground hover:bg-muted transition-colors"
                   >
-                    Сначала дешёвые
+                    <ArrowUpDown className="h-4 w-4 text-muted-foreground" />
+                    {sortLabels[sortOrder]}
+                    <ChevronDown className={`h-3.5 w-3.5 text-muted-foreground transition-transform ${isSortOpen ? 'rotate-180' : ''}`} />
                   </button>
-                  <button
-                    onClick={() => setSortOrder(sortOrder === "price_desc" ? "default" : "price_desc")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
-                      sortOrder === "price_desc" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    Сначала дорогие
-                  </button>
+                  {isSortOpen && (
+                    <div className="absolute right-0 top-full mt-1.5 w-56 bg-card rounded-xl border border-border shadow-lg z-30 py-1.5">
+                      {(["default", "price_asc", "price_desc"] as const).map((key) => (
+                        <button
+                          key={key}
+                          onClick={() => { setSortOrder(key); setIsSortOpen(false); }}
+                          className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-left hover:bg-muted transition-colors"
+                        >
+                          <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                            sortOrder === key ? 'border-accent' : 'border-border'
+                          }`}>
+                            {sortOrder === key && <div className="w-2 h-2 rounded-full bg-accent" />}
+                          </div>
+                          <span className={sortOrder === key ? 'font-medium text-foreground' : 'text-muted-foreground'}>
+                            {sortLabels[key]}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
               {activeCategory && (
