@@ -354,14 +354,14 @@ const Catalog = () => {
             placeholder="от 0"
             value={priceFrom}
             onChange={(e) => setPriceFrom(e.target.value)}
-            className="rounded-lg border-border text-sm"
+            className="rounded-lg border-border text-sm [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield]"
           />
           <Input
             type="number"
             placeholder="до 30 000"
             value={priceTo}
             onChange={(e) => setPriceTo(e.target.value)}
-            className="rounded-lg border-border text-sm"
+            className="rounded-lg border-border text-sm [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield]"
           />
         </div>
         <Slider
