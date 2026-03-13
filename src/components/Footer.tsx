@@ -123,7 +123,7 @@ const Footer = () => {
         ))}
 
         <div className="px-4 py-5">
-          <p className="text-xs text-muted-foreground mb-4">© OilMate 2024–2026. Все права защищены.</p>
+          <p className="text-sm text-muted-foreground mb-4">© OilMate 2024–2026. Все права защищены.</p>
           <div className="flex items-center gap-4">
             <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
