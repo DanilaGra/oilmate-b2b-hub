@@ -517,6 +517,9 @@ const Catalog = () => {
           <div className="flex items-center justify-between mb-4 md:mb-6">
             <div className="flex items-center gap-2 md:gap-3 flex-wrap">
               <h1 className="text-xl md:text-2xl font-semibold text-foreground">{categoryTitle}</h1>
+              {(activeCategory || searchQuery) && (
+                <span className="text-sm text-muted-foreground">Найдено: {filteredProducts.length} товаров</span>
+              )}
               {searchQuery && (
                 <button
                   onClick={clearSearch}
