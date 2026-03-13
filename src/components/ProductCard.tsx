@@ -65,7 +65,7 @@ const ProductCard = ({
 
         {/* Price */}
         <div className="flex items-baseline gap-2 mb-1 px-0.5">
-          <span className="text-lg font-bold text-foreground">
+          <span className={`text-lg font-bold text-foreground ${oldPrice ? 'bg-muted rounded-full px-3 py-0.5' : ''}`}>
             {rubles.toLocaleString("ru-RU")} ₽
           </span>
           {oldRubles && (
