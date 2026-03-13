@@ -87,7 +87,7 @@ const Footer = () => {
             </a>
             {/* Telegram */}
             <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.87 4.326-2.96-.924c-.643-.203-.657-.643.136-.953l11.57-4.46c.536-.194 1.006.13.83.94z"/>
               </svg>
             </a>
