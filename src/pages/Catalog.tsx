@@ -594,6 +594,7 @@ const Catalog = () => {
                   <div className="bg-card rounded-2xl p-5">
                     <h3 className="font-medium text-foreground mb-5">Фильтры</h3>
                     <FiltersContent />
+                  </div>
                 </div>
               </aside>
             )}
