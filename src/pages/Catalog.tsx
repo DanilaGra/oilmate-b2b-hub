@@ -633,9 +633,9 @@ const Catalog = () => {
             {/* Products grid */}
             <div className="flex-1">
               
-              {filteredProducts.length > 0 ? (
+              {sortedProducts.length > 0 ? (
                 <div className="grid gap-3 md:gap-4 grid-cols-2 lg:grid-cols-3">
-                  {filteredProducts.map((product, index) => (
+                  {sortedProducts.map((product, index) => (
                     <ProductCard key={index} {...product} />
                   ))}
                 </div>
