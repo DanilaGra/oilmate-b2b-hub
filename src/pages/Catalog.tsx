@@ -586,9 +586,9 @@ const Catalog = () => {
                       <ChevronLeft className="h-4 w-4" />
                       Все категории
                     </button>
-                    <span className="text-sm font-medium text-foreground pl-5 block">
+                    <div className="ml-5 inline-flex items-center px-4 py-2 rounded-full bg-muted text-sm font-medium text-foreground">
                       {categoryNames[activeCategory]}
-                    </span>
+                    </div>
                   </div>
 
                   <div className="bg-card rounded-2xl p-5">
