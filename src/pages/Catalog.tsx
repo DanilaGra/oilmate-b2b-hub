@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "@/components/ui/slider";
-import { SlidersHorizontal, X, ChevronLeft, ShoppingCart, ChevronDown } from "lucide-react";
+import { SlidersHorizontal, X, ChevronLeft, ShoppingCart, ChevronDown, ChevronUp, ArrowUpDown } from "lucide-react";
 import { useParams, useSearchParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { useCart } from "@/contexts/CartContext";
