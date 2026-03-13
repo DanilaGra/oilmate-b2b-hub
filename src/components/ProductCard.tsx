@@ -75,11 +75,9 @@ const ProductCard = ({
           )}
         </div>
 
-        {/* Brand / Name */}
+        {/* Name */}
         <p className="text-sm text-foreground line-clamp-2 leading-snug mb-1.5 px-0.5">
-          <span className="text-accent font-medium">{brand}</span>
-          <span className="text-muted-foreground"> / </span>
-          <span className="text-muted-foreground">{name}</span>
+          {name}
         </p>
 
         {/* Parameters */}
