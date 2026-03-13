@@ -210,7 +210,7 @@ const Catalog = () => {
   }, []);
 
   const sortLabels: Record<string, string> = {
-    default: "По популярности",
+    default: "По актуальности",
     price_asc: "По возрастанию цены",
     price_desc: "По убыванию цены",
   };
