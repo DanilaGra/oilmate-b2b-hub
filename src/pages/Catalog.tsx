@@ -517,6 +517,9 @@ const Catalog = () => {
           <div className="flex items-center justify-between mb-4 md:mb-6">
             <div className="flex items-center gap-2 md:gap-3 flex-wrap">
               <h1 className="text-xl md:text-2xl font-semibold text-foreground">{categoryTitle}</h1>
+              {(activeCategory || searchQuery) && (
+                <span className="text-sm text-muted-foreground">Найдено: {filteredProducts.length} товаров</span>
+              )}
               {searchQuery && (
                 <button
                   onClick={clearSearch}
@@ -601,11 +604,6 @@ const Catalog = () => {
 
             {/* Products grid */}
             <div className="flex-1">
-              {(activeCategory || searchQuery) && (
-                <div className="mb-4 text-sm text-muted-foreground">
-                  Найдено: {filteredProducts.length} товаров
-                </div>
-              )}
               
               {filteredProducts.length > 0 ? (
                 <div className="grid gap-3 md:gap-4 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
