@@ -131,7 +131,7 @@ const Footer = () => {
               </svg>
             </a>
             <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 6.6a2.85 2.85 0 110 5.7 2.85 2.85 0 010-5.7zm3.495 7.545c-.465.27-.975.465-1.515.585l1.74 1.74a.975.975 0 01-1.38 1.38L12 15.51l-2.34 2.34a.975.975 0 01-1.38-1.38l1.74-1.74a6.075 6.075 0 01-1.515-.585.975.975 0 01.975-1.69 4.125 4.125 0 004.035 0 .975.975 0 01.975 1.69z"/>
               </svg>
             </a>
