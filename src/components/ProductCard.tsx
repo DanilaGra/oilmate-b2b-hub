@@ -82,7 +82,8 @@ const ProductCard = ({
 
         {/* Parameters */}
         <p className="text-xs text-muted-foreground px-0.5 mb-3">
-          {[viscosity, oilType, volume].filter(Boolean).join(" · ")}
+          <span>{[viscosity, oilType].filter(Boolean).join(" · ")}</span>
+          <span className="hidden md:inline"> · {volume}</span>
         </p>
       </Link>
 
