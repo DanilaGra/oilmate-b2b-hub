@@ -555,9 +555,9 @@ const Catalog = () => {
                 </button>
               )}
             </div>
-            <div className="flex items-center gap-2">
+            <div className="hidden md:flex items-center gap-2">
               {(activeCategory || searchQuery) && (
-                <div className="relative hidden md:block" ref={sortRef}>
+                <div className="relative" ref={sortRef}>
                   <button
                     onClick={() => setIsSortOpen(!isSortOpen)}
                     className="flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-sm font-medium text-foreground hover:bg-muted transition-colors"
@@ -588,21 +588,53 @@ const Catalog = () => {
                   )}
                 </div>
               )}
-              {activeCategory && (
-                <Button
-                  variant="outline"
-                  className="md:hidden gap-2 shrink-0"
-                  onClick={() => setShowFilters(true)}
-                >
-                  <SlidersHorizontal className="h-4 w-4" />
-                  Фильтры
-                  {hasActiveFilters && (
-                    <span className="w-2 h-2 bg-primary rounded-full" />
-                  )}
-                </Button>
-              )}
             </div>
           </div>
+
+          {/* Mobile filter & sort bar */}
+          {(activeCategory || searchQuery) && (
+            <div className="flex md:hidden gap-2 mb-4">
+              <button
+                onClick={() => setShowFilters(true)}
+                className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-medium transition-all active:scale-95"
+              >
+                <SlidersHorizontal className="h-4 w-4" />
+                Фильтр
+                {hasActiveFilters && (
+                  <span className="w-2 h-2 bg-accent-foreground rounded-full" />
+                )}
+              </button>
+              <div className="relative flex-1" ref={sortRef}>
+                <button
+                  onClick={() => setIsSortOpen(!isSortOpen)}
+                  className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-muted text-foreground text-sm font-medium transition-all active:scale-95"
+                >
+                  <ArrowUpDown className="h-4 w-4" />
+                  {sortLabels[sortOrder]}
+                </button>
+                {isSortOpen && (
+                  <div className="absolute left-0 right-0 top-full mt-1.5 bg-card rounded-xl border border-border shadow-lg z-30 py-1.5">
+                    {(["default", "price_asc", "price_desc"] as const).map((key) => (
+                      <button
+                        key={key}
+                        onClick={() => { setSortOrder(key); setIsSortOpen(false); }}
+                        className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-left hover:bg-muted transition-colors"
+                      >
+                        <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                          sortOrder === key ? 'border-accent' : 'border-border'
+                        }`}>
+                          {sortOrder === key && <div className="w-2 h-2 rounded-full bg-accent" />}
+                        </div>
+                        <span className={sortOrder === key ? 'font-medium text-foreground' : 'text-muted-foreground'}>
+                          {sortLabels[key]}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Category selection view (when no specific category selected) */}
           {!activeCategory && !searchQuery && (
