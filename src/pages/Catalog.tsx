@@ -368,6 +368,7 @@ const Catalog = () => {
           min={0}
           max={30000}
           step={100}
+          minStepsBetweenThumbs={1}
           value={[
             priceFrom ? parseInt(priceFrom) : 0,
             priceTo ? parseInt(priceTo) : 30000,
@@ -376,7 +377,7 @@ const Catalog = () => {
             setPriceFrom(from > 0 ? String(from) : "");
             setPriceTo(to < 30000 ? String(to) : "");
           }}
-          className="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4 [&_[role=slider]]:bg-destructive [&_[role=slider]]:border-destructive [&_.relative>span]:bg-destructive"
+          className="cursor-grab active:cursor-grabbing [&_[role=slider]]:h-5 [&_[role=slider]]:w-5 [&_[role=slider]]:bg-destructive [&_[role=slider]]:border-destructive [&_[role=slider]]:cursor-grab [&_[role=slider]]:active:cursor-grabbing [&_[role=slider]]:shadow-md"
         />
       </div>
 
