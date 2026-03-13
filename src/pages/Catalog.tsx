@@ -577,7 +577,7 @@ const Catalog = () => {
             {/* Filters sidebar - desktop, only show when category is selected */}
             {activeCategory && (
               <aside className="hidden md:block w-64 shrink-0">
-                <div className="sticky top-24">
+                <div className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto scrollbar-hide">
                   {/* Category breadcrumb above filters */}
                   <div className="bg-card rounded-2xl p-4 mb-3">
                     <button
