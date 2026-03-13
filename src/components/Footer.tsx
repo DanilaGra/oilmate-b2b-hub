@@ -39,7 +39,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-muted text-foreground">
+    <footer className="bg-[hsl(220,9%,98%)] text-foreground">
       {/* Desktop */}
       <div className="container hidden md:block py-10">
         <div className="grid grid-cols-[1fr_1fr_1fr_1fr] gap-8">
