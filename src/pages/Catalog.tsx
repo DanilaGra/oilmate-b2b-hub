@@ -594,12 +594,13 @@ const Catalog = () => {
           {/* Mobile filter & sort bar */}
           {(activeCategory || searchQuery) && (
             <div className="flex md:hidden gap-2 mb-4">
-              <div className="relative" ref={sortRef}>
+              <div className="relative flex-1" ref={sortRef}>
                 <button
                   onClick={() => setIsSortOpen(!isSortOpen)}
-                  className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-muted text-foreground text-sm font-medium transition-all active:scale-95"
+                  className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-muted text-foreground text-sm font-medium transition-all active:scale-95"
                 >
-                  <ArrowUpDown className="h-3.5 w-3.5" />
+                  <ArrowUpDown className="h-4 w-4" />
+                  Сортировка
                 </button>
                 {isSortOpen && (
                   <div className="absolute left-0 top-full mt-1.5 w-52 bg-card rounded-xl border border-border shadow-lg z-30 py-1.5">
