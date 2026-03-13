@@ -346,37 +346,45 @@ const Catalog = () => {
   const FiltersContent = () => (
     <>
       {/* Price filter */}
-      <div className="mb-6">
-        <span className="text-sm text-muted-foreground mb-3 block">Цена</span>
-        <div className="flex gap-2">
-          <div className="relative flex-1">
-            <Input
-              type="number"
-              placeholder="от"
-              value={priceFrom}
-              onChange={(e) => setPriceFrom(e.target.value)}
-              className="pr-6 rounded-xl"
-            />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">₽</span>
-          </div>
-          <div className="relative flex-1">
-            <Input
-              type="number"
-              placeholder="до"
-              value={priceTo}
-              onChange={(e) => setPriceTo(e.target.value)}
-              className="pr-6 rounded-xl"
-            />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">₽</span>
-          </div>
+      <div className="mb-8">
+        <span className="text-sm font-semibold text-foreground mb-3 block">Цена, ₽</span>
+        <div className="flex gap-2 mb-3">
+          <Input
+            type="number"
+            placeholder="от 0"
+            value={priceFrom}
+            onChange={(e) => setPriceFrom(e.target.value)}
+            className="rounded-lg border-border text-sm"
+          />
+          <Input
+            type="number"
+            placeholder="до 30 000"
+            value={priceTo}
+            onChange={(e) => setPriceTo(e.target.value)}
+            className="rounded-lg border-border text-sm"
+          />
         </div>
+        <Slider
+          min={0}
+          max={30000}
+          step={100}
+          value={[
+            priceFrom ? parseInt(priceFrom) : 0,
+            priceTo ? parseInt(priceTo) : 30000,
+          ]}
+          onValueChange={([from, to]) => {
+            setPriceFrom(from > 0 ? String(from) : "");
+            setPriceTo(to < 30000 ? String(to) : "");
+          }}
+          className="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4 [&_[role=slider]]:bg-destructive [&_[role=slider]]:border-destructive [&_.relative>span]:bg-destructive"
+        />
       </div>
 
       {/* Brand filter */}
       {availableFilters.brands.length > 0 && (
-        <div className="mb-6">
-          <span className="text-sm text-muted-foreground mb-3 block">Бренд</span>
-          <ChipFilter
+        <div className="mb-8">
+          <span className="text-sm font-semibold text-foreground mb-3 block">Бренд</span>
+          <CheckboxFilter
             items={availableFilters.brands}
             selected={selectedBrands}
             onToggle={(item) => toggleFilter(item, selectedBrands, setSelectedBrands)}
@@ -385,28 +393,28 @@ const Catalog = () => {
         </div>
       )}
       
-      {/* Volume filter - show only if volumes exist for category */}
+      {/* Volume filter */}
       {availableFilters.volumes.length > 0 && activeCategory !== 'lubricants' && (
-        <div className="mb-6">
-          <span className="text-sm text-muted-foreground mb-3 block">Объем</span>
-          <ChipFilter
+        <div className="mb-8">
+          <span className="text-sm font-semibold text-foreground mb-3 block">Объём, л</span>
+          <CheckboxFilter
             items={availableFilters.volumes}
             selected={selectedVolumes}
             onToggle={(item) => toggleFilter(item, selectedVolumes, setSelectedVolumes)}
-            visibleCount={4}
+            visibleCount={5}
           />
         </div>
       )}
 
       {/* Category-specific filters */}
       {availableFilters.specificFilters.map(filter => (
-        <div key={filter.key} className="mb-6">
-          <span className="text-sm text-muted-foreground mb-3 block">{filter.label}</span>
-          <ChipFilter
+        <div key={filter.key} className="mb-8">
+          <span className="text-sm font-semibold text-foreground mb-3 block">{filter.label}</span>
+          <CheckboxFilter
             items={filter.options}
             selected={categoryFilters[filter.key] || []}
             onToggle={(item) => toggleCategoryFilter(filter.key, item)}
-            visibleCount={4}
+            visibleCount={5}
           />
         </div>
       ))}
