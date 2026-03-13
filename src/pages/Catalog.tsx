@@ -518,7 +518,7 @@ const Catalog = () => {
             <div className="flex items-center gap-2 md:gap-3 flex-wrap">
               <h1 className="text-xl md:text-2xl font-semibold text-foreground">{categoryTitle}</h1>
               {(activeCategory || searchQuery) && (
-                <span className="text-xl md:text-2xl text-muted-foreground font-semibold">{filteredProducts.length} товаров</span>
+                <span className="text-base md:text-lg text-muted-foreground">{filteredProducts.length} товаров</span>
               )}
               {searchQuery && (
                 <button
