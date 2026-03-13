@@ -57,7 +57,7 @@ const ProductCard = ({
             />
           </div>
           {oldPrice && (
-            <div className="absolute left-2 bottom-2 bg-gradient-to-r from-[hsl(211,100%,30%)] to-[hsl(211,100%,50%)] text-accent-foreground rounded-full px-2 py-0.5 flex items-center justify-center">
+            <div className="absolute left-2 bottom-2 bg-gradient-to-r from-[hsl(211,100%,30%)] to-[hsl(211,100%,50%)] text-accent-foreground rounded-full px-3.5 py-1.5 flex items-center justify-center">
               <span className="text-[9px] font-bold uppercase tracking-wide leading-none">Распродажа</span>
             </div>
           )}
