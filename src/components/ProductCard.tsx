@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
-import { Check, ShoppingCart, Star } from "lucide-react";
+import { Check } from "lucide-react";
 import { useState } from "react";
 
 interface ProductCardProps {
@@ -38,6 +38,7 @@ const ProductCard = ({
   oilType,
   isUniversal = true,
   category,
+  viscosity,
 }: ProductCardProps) => {
   const rubles = Math.floor(price);
   const oldRubles = oldPrice ? Math.floor(oldPrice) : null;
@@ -55,8 +56,6 @@ const ProductCard = ({
               className="h-full w-full object-contain p-6 transition-transform group-hover:scale-105"
             />
           </div>
-
-          {/* Discount badge */}
           {discountPercent && discountPercent > 0 && (
             <div className="absolute left-2 bottom-2 bg-accent text-accent-foreground rounded-lg px-2 py-0.5">
               <span className="text-xs font-bold">-{discountPercent}%</span>
@@ -83,11 +82,13 @@ const ProductCard = ({
           <span className="text-muted-foreground">{name}</span>
         </p>
 
-        {/* Rating */}
-        <div className="flex items-center gap-1 px-0.5 mb-3">
-          <Star className="h-3.5 w-3.5 fill-warning text-warning" />
-          <span className="text-xs font-medium text-foreground">4.8</span>
-          <span className="text-xs text-muted-foreground">· 124 оценки</span>
+        {/* Parameters */}
+        <div className="flex flex-wrap gap-1 px-0.5 mb-3">
+          {viscosity && (
+            <span className="text-[11px] text-muted-foreground bg-muted rounded-md px-1.5 py-0.5">{viscosity}</span>
+          )}
+          <span className="text-[11px] text-muted-foreground bg-muted rounded-md px-1.5 py-0.5">{oilType}</span>
+          <span className="text-[11px] text-muted-foreground bg-muted rounded-md px-1.5 py-0.5">{volume}</span>
         </div>
       </Link>
 
@@ -133,10 +134,7 @@ const AddToCartButton = ({ product }: { product: any }) => {
           Добавлено
         </>
       ) : (
-        <>
-          <ShoppingCart className="h-4 w-4 mr-1.5" />
-          В корзину
-        </>
+        "В корзину"
       )}
     </Button>
   );
