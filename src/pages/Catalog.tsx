@@ -624,7 +624,7 @@ const Catalog = () => {
               </div>
               <button
                 onClick={() => setShowFilters(true)}
-                className="basis-2/3 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-medium transition-all active:scale-95"
+                className="basis-2/3 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-gradient-to-r from-[hsl(211,100%,30%)] to-[hsl(211,100%,50%)] text-primary-foreground text-sm font-medium transition-all active:scale-95"
               >
                 <SlidersHorizontal className="h-4 w-4" />
                 Фильтр
